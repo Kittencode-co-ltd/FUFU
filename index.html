@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description"
+    content="FUFU Pet Care – Premium AI Pet Medical Center. Instant AI-powered diagnosis, treatment plans, and 24/7 vet consultations for your beloved pets." />
+  <title>FUFU Pet Care – Premium AI Pet Medical Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       SCREEN 1 · SPLASH
+  ═══════════════════════════════════════════ -->
+  <div id="screen-splash" class="screen active">
+    <div class="splash-center">
+      <div class="splash-logo-wrap">
+        <img src="pcare_logo.png" alt="FUFU Pet Care Logo" class="splash-logo" />
+        <div class="splash-pulse-ring"></div>
+        <div class="splash-pulse-ring ring2"></div>
+      </div>
+      <div class="splash-tagline">Premium AI Pet Medical Center</div>
+      <div class="splash-dots">
+        <span class="dot active"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+    </div>
+    <footer class="splash-footer">Powered by <span>KITTEN CODE</span></footer>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SCREEN 2 · AUTH (REGISTER / LOGIN)
+  ═══════════════════════════════════════════ -->
+  <div id="screen-auth" class="screen">
+    <div class="screen-inner auth-inner">
+      <div class="auth-logo-row">
+        <img src="pcare_logo.png" alt="FUFU Pet Care" class="auth-logo" />
+        <div class="auth-logo-text">FUFU Pet Care</div>
+      </div>
+
+      <div class="auth-tabs" id="auth-tabs">
+        <button class="auth-tab active" id="auth-tab-login" onclick="switchAuthTab('login')">Sign In</button>
+        <button class="auth-tab" id="auth-tab-register" onclick="switchAuthTab('register')">Register</button>
+      </div>
+
+      <!-- Social Login -->
+      <div class="social-btns">
+        <button class="social-btn google" onclick="socialLogin('google')">
+          <svg viewBox="0 0 24 24" class="social-icon">
+            <path fill="#4285F4"
+              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+            <path fill="#34A853"
+              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+            <path fill="#FBBC05"
+              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" />
+            <path fill="#EA4335"
+              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+          </svg>
+          Continue with Google
+        </button>
+        <button class="social-btn facebook" onclick="socialLogin('facebook')">
+          <svg viewBox="0 0 24 24" class="social-icon" fill="#1877F2">
+            <path
+              d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+          </svg>
+          Continue with Facebook
+        </button>
+      </div>
+
+      <div class="auth-divider"><span>or</span></div>
+
+      <!-- Register Form (shown when tab=register) -->
+      <div id="auth-form-register" class="auth-form" style="display:none">
+        <div class="input-group">
+          <label class="input-label">Full Name</label>
+          <div class="input-wrap">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <input type="text" class="field-input" id="reg-name" placeholder="Your full name" />
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Email</label>
+          <div class="input-wrap">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+            <input type="email" class="field-input" id="reg-email" placeholder="you@email.com" />
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Phone Number</label>
+          <div class="input-wrap phone-wrap">
+            <select class="country-select" id="reg-country">
+              <option value="+66">🇹🇭 +66</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+44">🇬🇧 +44</option>
+              <option value="+81">🇯🇵 +81</option>
+              <option value="+82">🇰🇷 +82</option>
+              <option value="+65">🇸🇬 +65</option>
+            </select>
+            <input type="tel" class="field-input phone-input" id="reg-phone" placeholder="081 234 5678" />
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Password</label>
+          <div class="input-wrap">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            <input type="password" class="field-input" id="reg-pass" placeholder="Min 8 characters" />
+          </div>
+        </div>
+        <button class="btn-primary" onclick="doRegister()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+          Create Account
+        </button>
+      </div>
+
+      <!-- Login Form (shown when tab=login) -->
+      <div id="auth-form-login" class="auth-form">
+        <div class="input-group">
+          <label class="input-label">Email</label>
+          <div class="input-wrap">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+            <input type="email" class="field-input" id="login-email" placeholder="you@email.com" />
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Password</label>
+          <div class="input-wrap">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            <input type="password" class="field-input" id="login-pass" placeholder="Password" />
+          </div>
+        </div>
+        <div class="auth-forgot">Forgot password?</div>
+        <button class="btn-primary" onclick="doLogin()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+            <polyline points="10 17 15 12 10 7" />
+            <line x1="15" y1="12" x2="3" y2="12" />
+          </svg>
+          Sign In
+        </button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SCREEN 3 · PET PROFILE
+  ═══════════════════════════════════════════ -->
+  <div id="screen-profile" class="screen">
+    <div class="screen-inner">
+      <div class="screen-header">
+        <div class="header-chip">New Patient</div>
+        <h1 class="screen-title">Who are we caring<br />for today?</h1>
+        <p class="screen-subtitle">Tell us about your furry friend</p>
+      </div>
+
+      <!-- Pet Photo Upload -->
+      <div class="pet-photo-upload" onclick="document.getElementById('pet-photo-input').click()">
+        <div class="pet-photo-preview" id="pet-photo-preview">
+          <div class="pet-photo-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              class="photo-placeholder-icon">
+              <rect x="3" y="3" width="18" height="18" rx="4" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <polyline points="21 15 16 10 5 21" />
+            </svg>
+            <span>Add Pet Photo</span>
+          </div>
+          <img id="pet-photo-img" class="pet-photo-img" style="display:none" alt="Pet photo" />
+        </div>
+        <div class="pet-photo-edit-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="width:12px;height:12px">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg>
+        </div>
+        <input type="file" id="pet-photo-input" accept="image/*" style="display:none"
+          onchange="previewPetPhoto(this)" />
+      </div>
+
+      <!-- Pet Type Toggle -->
+      <div class="pet-toggle-wrap">
+        <div class="pet-toggle" id="pet-toggle">
+          <div class="toggle-slider" id="toggle-slider"></div>
+          <button class="toggle-btn active" id="btn-dog" onclick="selectPet('dog')">
+            <span class="toggle-emoji">🐶</span> Dog
+          </button>
+          <button class="toggle-btn" id="btn-cat" onclick="selectPet('cat')">
+            <span class="toggle-emoji">🐱</span> Cat
+          </button>
+        </div>
+      </div>
+
+      <!-- Form Fields -->
+      <div class="form-stack">
+        <div class="form-row">
+          <div class="input-group">
+            <label class="input-label">Pet's Name</label>
+            <div class="input-wrap">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+              <input type="text" class="field-input" id="pet-name" placeholder="e.g. Mochi" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row two-col">
+          <div class="input-group">
+            <label class="input-label">Age</label>
+            <div class="input-wrap">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              <input type="number" class="field-input" id="pet-age" placeholder="Years" min="0" max="30" />
+            </div>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Weight (kg)</label>
+            <div class="input-wrap">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="5" r="3" />
+                <path d="M6.5 8a2 2 0 0 0-1.905 1.38L3 13h18l-1.595-3.62A2 2 0 0 0 17.5 8h-11z" />
+                <path d="M3 13v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+              </svg>
+              <input type="number" class="field-input" id="pet-weight" placeholder="kg" step="0.1" />
+            </div>
+          </div>
+        </div>
+
+        <!-- ① DNA icon for breed -->
+        <div class="input-group">
+          <label class="input-label">Breed</label>
+          <div class="input-wrap select-wrap">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M2 2c2.5 2.5 5 5 5 9s-2.5 6.5-5 9" />
+              <path d="M22 2c-2.5 2.5-5 5-5 9s2.5 6.5 5 9" />
+              <path d="M3.5 8h17" />
+              <path d="M3.5 16h17" />
+            </svg>
+            <input type="text" class="field-input" id="breed-search" placeholder="Search breed..."
+              oninput="filterBreeds(this.value)" onfocus="openBreedDropdown()" autocomplete="off" />
+            <svg class="select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+          <div class="breed-dropdown" id="breed-dropdown"></div>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="syncPetInfoDisplays(); goToScreen('screen-home')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+        Continue
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SCREEN 3 · SUBSCRIPTION PLANS  (no bottom nav)
+  ═══════════════════════════════════════════ -->
+  <div id="screen-plans" class="screen">
+    <div class="screen-inner">
+      <div class="plans-top-row">
+        <button class="back-btn" onclick="goToScreen('screen-auth')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <div>
+          <div class="header-chip" style="margin-bottom:4px">Choose Your Plan</div>
+          <h1 class="screen-title" style="font-size:22px;margin:0">Premium Care,<br />Your Way</h1>
+        </div>
+      </div>
+      <p class="screen-subtitle" style="margin-bottom:20px">Upgrade anytime. Cancel anytime.</p>
+
+      <div class="plans-stack">
+
+        <!-- Plan 1: Basic -->
+        <div class="plan-card" id="plan-0" onclick="selectPlan(this,0)">
+          <div class="plan-top">
+            <div class="plan-badge free">Free</div>
+            <div class="plan-name">Essential</div>
+            <div class="plan-price"><span class="plan-currency">$</span>0<span class="plan-period">/mo</span></div>
+          </div>
+          <ul class="plan-features">
+            <li>Basic Pet Profile</li>
+            <li>1 AI Scan / month</li>
+            <li class="text-muted">Health Log</li>
+          </ul>
+        </div>
+
+        <!-- Plan 2: Starter -->
+        <div class="plan-card" id="plan-1" onclick="selectPlan(this,1)">
+          <div class="plan-top">
+            <div class="plan-badge starter">Starter</div>
+            <div class="plan-name">Care Plus</div>
+            <div class="plan-price"><span class="plan-currency">$</span>5<span class="plan-period">/mo</span></div>
+          </div>
+          <ul class="plan-features">
+            <li>Weekly AI Scans</li>
+            <li>Full Health Log</li>
+            <li>Email Reports</li>
+          </ul>
+        </div>
+
+        <!-- Plan 3: Pro -->
+        <div class="plan-card popular" id="plan-2" onclick="selectPlan(this,2)">
+          <div class="popular-badge">Most Popular</div>
+          <div class="plan-top">
+            <div class="plan-badge pro">Pro</div>
+            <div class="plan-name">Protection</div>
+            <div class="plan-price"><span class="plan-currency">$</span>10<span class="plan-period">/mo</span></div>
+          </div>
+          <ul class="plan-features">
+            <li>Unlimited AI Scans</li>
+            <li>Detailed PDF Reports</li>
+            <li>Priority Response</li>
+          </ul>
+        </div>
+
+        <!-- Plan 4: VET VIP -->
+        <div class="plan-card vip" id="plan-3" onclick="selectPlan(this,3)">
+          <div class="vip-shimmer"></div>
+          <div class="vip-top-row">
+            <div class="plan-badge vip-badge">VET VIP</div>
+            <div class="vip-crown">👑</div>
+          </div>
+          <div class="plan-name vip-name">Ultimate Concierge</div>
+          <div class="plan-price"><span class="plan-currency gold">$</span><span class="gold">50</span><span
+              class="plan-period gold">/mo</span></div>
+          <div class="vip-feature-hero">
+            <div class="vip-call-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="vip-icon">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+              24/7 Live Vet Consultation
+            </div>
+          </div>
+          <ul class="plan-features vip-features">
+            <li>Everything in Pro</li>
+            <li>📹 Video &amp; Voice Call Vet</li>
+            <li>Dedicated Pet Specialist</li>
+            <li>Priority Drug Delivery</li>
+          </ul>
+          <div class="vip-recommend-badge">⭐ Recommended for Seniors &amp; Puppies</div>
+        </div>
+
+      </div>
+
+      <!-- ③ Go Back Home button -->
+      <button class="btn-primary" id="plans-cta-btn" onclick="goToScreen('screen-profile')"
+        style="opacity:.5;pointer-events:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+        Select a Plan to Continue
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SCREEN - PAYMENT
+  ═══════════════════════════════════════════ -->
+  <div id="screen-payment" class="screen">
+    <div class="screen-inner">
+      <div class="screen-header">
+        <button class="nav-back-btn" onclick="goToScreen('screen-plans')" style="margin-bottom: 20px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:20px;height:20px">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <div class="header-chip">Checkout</div>
+        <h1 class="screen-title">Select Payment<br />Method</h1>
+        <p class="screen-subtitle">Choose how you want to pay for the <span id="payment-plan-name"
+            style="font-weight:700;">Plan</span></p>
+      </div>
+
+      <div class="payment-options" style="margin-top:24px;">
+        <div class="payment-card selected" onclick="selectPaymentMethod(this, 'promptpay')">
+          <div class="payment-card-inner"
+            style="display:flex; align-items:center; justify-content:space-between; padding:20px; background:white; border-radius:16px; border:2px solid var(--teal); box-shadow:0 8px 24px rgba(13,148,136,0.15); margin-bottom:16px; transition:0.2s; cursor:pointer;">
+            <div style="display:flex; align-items:center; gap:16px;">
+              <div
+                style="width:40px; height:40px; background:var(--off-white); border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2" style="width:24px;height:24px;">
+                  <rect x="3" y="3" width="18" height="18" rx="4" />
+                  <circle cx="8" cy="8" r="1.5" />
+                  <path d="M16 16v-4h-4v4h4z" />
+                </svg>
+              </div>
+              <div style="font-weight:700; font-size:16px; color:var(--slate);">PromptPay</div>
+            </div>
+            <div class="payment-check"
+              style="width:24px; height:24px; border-radius:50%; background:var(--teal); display:flex; align-items:center; justify-content:center;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" style="width:14px;height:14px;">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="payment-card" onclick="selectPaymentMethod(this, 'truemoney')">
+          <div class="payment-card-inner"
+            style="display:flex; align-items:center; justify-content:space-between; padding:20px; background:white; border-radius:16px; border:2px solid transparent; box-shadow:var(--shadow-card); margin-bottom:16px; transition:0.2s; cursor:pointer;">
+            <div style="display:flex; align-items:center; gap:16px;">
+              <div
+                style="width:40px; height:40px; background:#ffebc2; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#f37021; font-weight:900; font-size:20px;">
+                T
+              </div>
+              <div style="font-weight:700; font-size:16px; color:var(--slate);">TrueMoney</div>
+            </div>
+            <div class="payment-check"
+              style="width:24px; height:24px; border-radius:50%; border:2px solid var(--slate-ghost); display:flex; align-items:center; justify-content:center;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"
+                style="width:14px;height:14px; opacity:0;">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="payment-card" onclick="selectPaymentMethod(this, 'paypal')">
+          <div class="payment-card-inner"
+            style="display:flex; align-items:center; justify-content:space-between; padding:20px; background:white; border-radius:16px; border:2px solid transparent; box-shadow:var(--shadow-card); margin-bottom:16px; transition:0.2s; cursor:pointer;">
+            <div style="display:flex; align-items:center; gap:16px;">
+              <div
+                style="width:40px; height:40px; background:#e6f3ff; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#003087; font-weight:900; font-size:20px;">
+                P
+              </div>
+              <div style="font-weight:700; font-size:16px; color:var(--slate);">PayPal</div>
+            </div>
+            <div class="payment-check"
+              style="width:24px; height:24px; border-radius:50%; border:2px solid var(--slate-ghost); display:flex; align-items:center; justify-content:center;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"
+                style="width:14px;height:14px; opacity:0;">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="fixed-bottom"
+        style="position:fixed; bottom:0; left:0; right:0; padding:24px; background:linear-gradient(to top, rgba(248,250,252,1) 60%, rgba(248,250,252,0)); pointer-events:none;">
+        <button class="btn-primary" onclick="confirmPayment()"
+          style="box-shadow: 0 12px 32px rgba(13,148,136,0.3); pointer-events:auto;">
+          Confirm Payment
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SCREEN 4 · AI SCAN
+  ═══════════════════════════════════════════ -->
+  <div id="screen-scan" class="screen">
+    <div class="scan-fullscreen">
+      <div class="scan-bg"></div>
+
+      <div class="scan-header-bar">
+        <button class="scan-back-btn" onclick="goToScreen('screen-home')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <div class="scan-mode-badge" id="scan-mode-badge">Eyes Mode</div>
+        <button class="scan-ctrl-btn secondary" title="Flash"
+          style="background: rgba(255,255,255,0.15); width:36px; height:36px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="viewfinder-wrap">
+        <div class="viewfinder" id="viewfinder">
+          <div class="scan-grid"></div>
+          <div class="vf-corner tl"></div>
+          <div class="vf-corner tr"></div>
+          <div class="vf-corner bl"></div>
+          <div class="vf-corner br"></div>
+          <div class="scan-line" id="scan-line"></div>
+          <div class="vf-pet-preview">
+            <div class="vf-pet-circle" id="vf-pet-circle">🐶</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scan-status-bar" style="margin-bottom:8px;">
+        <div class="scan-status-text" id="scan-status-text"
+          style="background: rgba(40,40,30,0.8); padding:10px 20px; border-radius:100px; color:white; font-size:14px; font-weight:600; display:inline-block;">
+          Align guides with Mochi's eyes & hold still</div>
+        <div class="scan-progress-bar" style="display:none;">
+          <div class="scan-progress-fill" id="scan-progress"></div>
+        </div>
+      </div>
+
+      <div class="scan-part-selector" id="scan-part-selector">
+        <button class="scan-part-btn active" onclick="selectScanPart(this, 'Eyes')">Eyes</button>
+        <button class="scan-part-btn" onclick="selectScanPart(this, 'Ear')">Ear</button>
+        <button class="scan-part-btn" onclick="selectScanPart(this, 'Skin')">Skin</button>
+        <button class="scan-part-btn" onclick="selectScanPart(this, 'Dental')">Dental</button>
+        <button class="scan-part-btn" onclick="selectScanPart(this, 'Motion')">Motion</button>
+      </div>
+
+      <div class="scan-controls" style="padding-bottom: 20px;">
+        <div style="width:44px"></div><!-- Spacer for alignment -->
+        <button class="scan-capture-btn" id="scan-capture-btn" onclick="startScan()"
+          style="width:80px; height:80px; border:4px solid white; background:transparent; box-shadow:none; padding:0; display:flex; align-items:center; justify-content:center;">
+          <div style="width:64px; height:64px; background:white; border-radius:50%;"></div>
+        </button>
+        <div style="width:44px"></div><!-- Spacer for alignment -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SCREEN 5 · MEDICAL RESULT
+  ═══════════════════════════════════════════ -->
+  <div id="screen-result" class="screen">
+    <div class="screen-inner result-inner">
+
+      <div class="result-header-row">
+        <button class="back-btn" onclick="resetScan()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <h2 class="result-title">Diagnosis Report</h2>
+        <button class="share-btn" onclick="goToScreen('screen-health')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="confidence-banner">
+        <div class="confidence-icon">🔬</div>
+        <div class="confidence-info">
+          <div class="confidence-label">Suspected Diagnosis</div>
+          <div class="confidence-name">Fungal Infection (Ringworm)</div>
+          <div class="confidence-label" style="margin-top:4px; color:var(--teal)">📌 Scanned Area: <span
+              id="result-scanned-part">ดวงตา</span></div>
+        </div>
+        <div class="confidence-score">
+          <div class="score-num">94%</div>
+          <div class="score-label">Confidence</div>
+        </div>
+      </div>
+
+      <div class="heatmap-card">
+        <div class="heatmap-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="heatmap-icon">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+          Visual Evidence · Infected Area
+        </div>
+        <div class="heatmap-img-wrap">
+          <div class="heatmap-base">🐶</div>
+          <div class="heatmap-overlay">
+            <div class="heat-spot spot1"></div>
+            <div class="heat-spot spot2"></div>
+            <div class="heat-spot spot3"></div>
+          </div>
+          <div class="heatmap-legend">
+            <div class="legend-item"><span class="legend-dot red"></span> High</div>
+            <div class="legend-item"><span class="legend-dot orange"></span> Mid</div>
+            <div class="legend-item"><span class="legend-dot yellow"></span> Low</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="treatment-section">
+        <div class="treatment-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="treat-icon">
+            <path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+          </svg>
+          Recommended Care &amp; Medication
+        </div>
+
+        <div class="treatment-text-block">
+          <strong>📝 First Aid Instructions:</strong><br />
+          • Clean the infected area gently with saline solution.<br />
+          • Prevent your pet from scratching or licking the area.<br />
+          • If symptoms worsen, consult a veterinarian immediately.
+        </div>
+
+        <!-- Medicine 1 -->
+        <div class="med-card"
+          style="display:flex; justify-content:space-between; align-items:center; padding:16px; background:var(--white); border-radius:12px; border:1px solid var(--slate-ghost); margin-bottom:12px;">
+          <div style="display:flex; gap:16px;">
+            <div class="med-img-wrap"
+              style="width:64px; height:64px; background:var(--off-white); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <span style="font-size:32px;">🧴</span>
+            </div>
+            <div class="med-info" style="display:flex; flex-direction:column; justify-content:center; gap:4px;">
+              <div class="med-name" style="font-weight:700; font-size:15px; color:var(--slate);">Miconazole Cream 2%
+              </div>
+              <div class="med-usage" style="font-size:13px; color:var(--slate-lite);">Apply morning & evening (14 days)
+              </div>
+              <div class="med-tags" style="display:flex; gap:6px; margin-top:2px;">
+                <span
+                  style="background:#CFFDE1; color:#0D9488; font-size:11px; font-weight:700; padding:2px 8px; border-radius:100px;">Antifungal</span>
+                <span
+                  style="background:#CFFDE1; color:#0D9488; font-size:11px; font-weight:700; padding:2px 8px; border-radius:100px;">Topical</span>
+              </div>
+            </div>
+          </div>
+          <div class="med-price" style="font-weight:900; color:var(--teal); font-size:16px; font-family:var(--font);">
+            ฿350</div>
+        </div>
+
+        <!-- Medicine 2 -->
+        <div class="med-card secondary-med"
+          style="display:flex; justify-content:space-between; align-items:center; padding:16px; background:var(--white); border-radius:12px; border:1px solid var(--slate-ghost); margin-bottom:24px;">
+          <div style="display:flex; gap:16px;">
+            <div class="med-img-wrap med-shampoo-wrap"
+              style="width:64px; height:64px; background:#CFFDE1; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <span style="font-size:32px;">�</span>
+            </div>
+            <div class="med-info" style="display:flex; flex-direction:column; justify-content:center; gap:4px;">
+              <div class="med-name" style="font-weight:700; font-size:15px; color:var(--slate);">Ketoconazole Shampoo
+              </div>
+              <div class="med-usage" style="font-size:13px; color:var(--slate-lite);">Bathe twice a week</div>
+              <div class="med-tags" style="display:flex; gap:6px; margin-top:2px;">
+                <span
+                  style="background:#CFFDE1; color:#0D9488; font-size:11px; font-weight:700; padding:2px 8px; border-radius:100px;">Antifungal</span>
+                <span
+                  style="background:#CFFDE1; color:#0D9488; font-size:11px; font-weight:700; padding:2px 8px; border-radius:100px;">Shampoo</span>
+              </div>
+            </div>
+          </div>
+          <div class="med-price" style="font-weight:900; color:var(--teal); font-size:16px; font-family:var(--font);">
+            ฿480</div>
+        </div>
+
+        <div class="nearby-vets-section" style="margin-top:20px;">
+          <div class="treatment-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="treat-icon"
+              style="color:var(--teal)">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            Nearby Clinics / Pharmacies
+          </div>
+
+          <!-- Dynamic Result Map -->
+          <div class="map-placeholder" id="result-map-wrap"
+            style="width:100%; height:160px; background:#DFE5EE; border-radius:12px; display:flex; align-items:center; justify-content:center; border:1px solid var(--slate-ghost); margin-top:12px; overflow:hidden; position:relative;">
+
+            <div id="result-map-loading"
+              style="display:flex; flex-direction:column; align-items:center; color:var(--slate-lite);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                style="width:24px;height:24px;margin-bottom:8px">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              <span>Loading map...</span>
+            </div>
+
+            <iframe id="result-map-frame" style="display:none; width:100%; height:100%; border:0;"
+              loading="lazy"></iframe>
+          </div>
+
+          <div class="vet-list" style="margin-top:16px; display:flex; flex-direction:column; gap:12px;">
+            <div class="vet-item"
+              style="display:flex; justify-content:space-between; align-items:center; padding:16px; background:var(--white); border-radius:12px; border:1px solid var(--slate-ghost);">
+              <div style="display:flex; flex-direction:column; gap:4px;">
+                <strong style="font-size:15px; color:var(--slate);">PetCare Clinic</strong>
+                <span style="color:var(--slate-lite); font-size:13px;">1.2 km away · Open until 20:00</span>
+              </div>
+              <button
+                style="border:none;background:#CFFDE1;color:#0D9488;padding:8px 14px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer; font-family:var(--font);">Get
+                Directions</button>
+            </div>
+          </div>
+
+          <!-- Caution Banner -->
+          <div
+            style="margin-top:24px; background:#FFF4E5; border:1px solid #FFD399; border-radius:12px; padding:16px; display:flex; gap:12px; align-items:flex-start;">
+            <div style="color:#F97316; flex-shrink:0;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                style="width:20px;height:20px;">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+            </div>
+            <div style="font-size:13px; color:#9A3412; font-weight:600; line-height:1.4;">
+              Please consult a veterinarian before starting any medication or treatment.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="disclaimer-box" style="margin-top:20px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="disc-icon">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
+        กรุณาปรึกษาสัตวแพทย์ทุกครั้งก่อนเริ่มใช้ยาหรือการรักษาใดๆ
+      </div>
+    </div>
+
+    <div class="result-cta-stack">
+      <button class="btn-primary" onclick="alert('Ordering medicine...')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <path d="M16 10a4 4 0 0 1-8 0" />
+        </svg>
+        Order Medicine
+      </button>
+      <button class="btn-secondary vip-consult-btn" onclick="goToScreen('screen-plans')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon">
+          <path
+            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+        </svg>
+        Consult Vet · VIP Plan
+      </button>
+    </div>
+  </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SCREEN - HOME (PET DASHBOARD)
+  ═══════════════════════════════════════════ -->
+  <div id="screen-home" class="screen">
+    <div class="screen-inner">
+      <div class="home-header">
+        <div>
+          <div class="home-greeting" id="home-greeting">Good evening 👋</div>
+          <div class="home-owner-name" id="home-owner-name">Welcome back!</div>
+        </div>
+        <div class="home-plan-badge" id="home-plan-badge">Free</div>
+      </div>
+      <div class="section-title-row" style="margin-bottom:14px">
+        <span class="section-title">My Pets</span>
+        <button class="add-pet-btn" id="add-pet-btn" onclick="goToScreen('screen-profile')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          Add Pet
+        </button>
+      </div>
+      <div class="pet-cards-list" id="pet-cards-list">
+        <!-- Rendered by JS -->
+      </div>
+      <div class="section-title-row" style="margin-top:20px;margin-bottom:14px">
+        <span class="section-title">Quick Actions</span>
+      </div>
+      <div class="quick-action-grid">
+        <button class="quick-action-card" onclick="navTo('scan')">
+          <div class="qa-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+              style="width:22px;height:22px">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+              <circle cx="12" cy="13" r="4" />
+            </svg></div>
+          <div class="qa-label">AI Scan</div>
+        </button>
+        <button class="quick-action-card" onclick="navTo('health')">
+          <div class="qa-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+              style="width:22px;height:22px">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg></div>
+          <div class="qa-label">Health Log</div>
+        </button>
+        <button class="quick-action-card" onclick="navTo('chat')">
+          <div class="qa-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+              style="width:22px;height:22px">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg></div>
+          <div class="qa-label">AI Chat</div>
+        </button>
+        <button class="quick-action-card" onclick="goToScreen('screen-plans')">
+          <div class="qa-icon gold"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+              style="width:22px;height:22px">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg></div>
+          <div class="qa-label">Upgrade</div>
+        </button>
+      </div>
+      <div class="section-title-row" style="margin-top:20px;margin-bottom:12px">
+        <span class="section-title">Latest Scan</span>
+        <span class="section-see-all" onclick="goToScreen('screen-health')">See All</span>
+      </div>
+      <div class="last-scan-card" onclick="goToScreen('screen-result')">
+        <div class="lsc-icon">🔬</div>
+        <div class="lsc-info">
+          <div class="lsc-diag">Fungal Infection (Ringworm)</div>
+          <div class="lsc-date">Mar 1, 2026 · 94% Confidence</div>
+        </div>
+        <span class="tag-warning" style="flex-shrink:0">Treat</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SCREEN 6 - HEALTH SUMMARY
+  ═══════════════════════════════════════════ -->
+  <div id="screen-health" class="screen">
+    <div class="screen-inner">
+      <div class="screen-header">
+        <div class="header-chip">Health Dashboard</div>
+        <h1 class="screen-title">Health<br />Summary</h1>
+        <p class="screen-subtitle">Track your pet's wellness over time</p>
+      </div>
+
+      <!-- Pet Info Header -->
+      <div class="health-pet-header">
+        <div class="health-pet-photo" id="health-pet-photo">🐶</div>
+        <div class="health-pet-info">
+          <div class="health-pet-name" id="health-pet-name-display">Mochi</div>
+          <div class="health-pet-meta" id="health-pet-meta-display">Golden Retriever · 3 yrs · 6.8 kg</div>
+        </div>
+        <button class="back-btn" onclick="goToScreen('screen-home')" style="margin-left:auto">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Health Score Ring -->
+      <div class="health-score-card">
+        <div class="health-ring-wrap">
+          <svg class="health-ring-svg" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#EEF2F7" stroke-width="10" />
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#0D9488" stroke-width="10" stroke-dasharray="314"
+              stroke-dashoffset="75" stroke-linecap="round" transform="rotate(-90 60 60)" class="health-ring-arc" />
+          </svg>
+          <div class="health-ring-inner">
+            <div class="health-score-num">76</div>
+            <div class="health-score-label">Health Score</div>
+          </div>
+        </div>
+        <div class="health-status-badges">
+          <div class="health-badge green">🟢 Good Overall</div>
+          <div class="health-badge orange">🟡 Skin – Monitor</div>
+          <div class="health-badge green">🟢 Weight – Normal</div>
+        </div>
+      </div>
+
+      <!-- Basic Treatment / Care Guide -->
+      <div class="section-title-row" style="margin-top:20px;">
+        <span class="section-title">Care &amp; Medication</span>
+      </div>
+      <div class="treatment-section"
+        style="background:var(--white); padding:16px; border-radius:var(--radius); box-shadow:var(--shadow-card); margin-bottom:20px;">
+        <div class="treatment-text-block"
+          style="margin-bottom:0; box-shadow:none; border-left:3px solid var(--orange);">
+          <strong>📝 คำแนะนำเบื้องต้น (First Aid):</strong><br />
+          • ให้สัตว์เลี้ยงดื่มน้ำเพียงพอและพักผ่อน<br />
+          • สังเกตอาการผิดปกติ เช่น ซึม ไม่ทานอาหาร<br />
+          • หากมีอาการรุนแรงควรพบสัตวแพทย์ทันที
+        </div>
+      </div>
+
+      <!-- Nearby Vet Clinics & Pharmacy -->
+      <div class="section-title-row">
+        <span class="section-title">Nearby Clinics &amp; Pharmacies</span>
+      </div>
+      <div class="nearby-vets-section" style="margin-bottom:20px;">
+        <div class="map-placeholder" id="map-wrap"
+          style="width:100%; height:160px; background:#DFE5EE; border-radius:12px; display:flex; align-items:center; justify-content:center; border:1px solid var(--slate-ghost); overflow:hidden; position:relative;">
+          <div id="map-loading"
+            style="display:flex; flex-direction:column; align-items:center; color:var(--slate-lite);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="width:24px;height:24px;margin-bottom:8px">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <span>กำลังโหลดแผนที่...</span>
+          </div>
+          <iframe id="map-frame" style="display:none; width:100%; height:100%; border:0;" loading="lazy"></iframe>
+        </div>
+
+        <div class="vet-list" style="margin-top:16px; display:flex; flex-direction:column; gap:12px;">
+          <div class="vet-item"
+            style="display:flex; justify-content:space-between; align-items:center; padding:16px; background:var(--white); border-radius:12px; border:1px solid var(--slate-ghost);">
+            <div style="display:flex; flex-direction:column; gap:4px;">
+              <strong style="font-size:15px; color:var(--slate);">PetCare Clinic</strong>
+              <span style="color:var(--slate-lite); font-size:13px;">1.2 km away · Open until 20:00</span>
+            </div>
+            <button
+              style="border:none;background:#CFFDE1;color:#0D9488;padding:8px 14px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer; font-family:var(--font);">Get
+              Directions</button>
+          </div>
+
+          <div class="vet-item"
+            style="display:flex; justify-content:space-between; align-items:center; padding:16px; background:var(--white); border-radius:12px; border:1px solid var(--slate-ghost);">
+            <div style="display:flex; flex-direction:column; gap:4px;">
+              <strong style="font-size:15px; color:var(--slate);">Happy Vet Pharmacy</strong>
+              <span style="color:var(--slate-lite); font-size:13px;">2.5 km away · 24 Hours</span>
+            </div>
+            <button
+              style="border:none;background:#CFFDE1;color:#0D9488;padding:8px 14px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer; font-family:var(--font);">Get
+              Directions</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scan History Timeline -->
+      <div class="section-title-row">
+        <span class="section-title">Scan History</span>
+        <span class="section-see-all">See All</span>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item active-result">
+          <div class="timeline-dot teal"></div>
+          <div class="timeline-card">
+            <div class="timeline-date">Today · Mar 1, 2026</div>
+            <div class="timeline-diag">Fungal Infection (Ringworm)</div>
+            <div class="timeline-conf">94% Confidence · <span class="tag-warning">Treatment Needed</span></div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot grey"></div>
+          <div class="timeline-card">
+            <div class="timeline-date">Feb 12, 2026</div>
+            <div class="timeline-diag">Mild Allergic Reaction</div>
+            <div class="timeline-conf">87% Confidence · <span class="tag-ok">Resolved</span></div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot grey"></div>
+          <div class="timeline-card">
+            <div class="timeline-date">Jan 28, 2026</div>
+            <div class="timeline-diag">Routine Wellness Check</div>
+            <div class="timeline-conf">100% · <span class="tag-ok">Healthy</span></div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot grey"></div>
+          <div class="timeline-card">
+            <div class="timeline-date">Jan 5, 2026</div>
+            <div class="timeline-diag">Eye Discharge (Mild)</div>
+            <div class="timeline-conf">79% Confidence · <span class="tag-ok">Resolved</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Weight Tracking -->
+      <div class="section-title-row" style="margin-top:20px">
+        <span class="section-title">Weight Tracking</span>
+      </div>
+      <div class="weight-chart-card">
+        <div class="weight-chart">
+          <div class="wc-bar-group">
+            <div class="wc-bar" style="height:55%"></div>
+            <div class="wc-label">Oct</div>
+          </div>
+          <div class="wc-bar-group">
+            <div class="wc-bar" style="height:62%"></div>
+            <div class="wc-label">Nov</div>
+          </div>
+          <div class="wc-bar-group">
+            <div class="wc-bar" style="height:58%"></div>
+            <div class="wc-label">Dec</div>
+          </div>
+          <div class="wc-bar-group">
+            <div class="wc-bar" style="height:65%"></div>
+            <div class="wc-label">Jan</div>
+          </div>
+          <div class="wc-bar-group">
+            <div class="wc-bar" style="height:70%"></div>
+            <div class="wc-label">Feb</div>
+          </div>
+          <div class="wc-bar-group active-bar">
+            <div class="wc-bar highlight" style="height:68%">
+              <div class="wc-tip">6.8kg</div>
+            </div>
+            <div class="wc-label">Mar</div>
+          </div>
+        </div>
+        <div class="weight-range">Healthy range: 5.5 – 8.0 kg</div>
+      </div>
+
+      <!-- Next Appointment -->
+      <div class="appt-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="appt-icon">
+          <rect x="3" y="4" width="18" height="18" rx="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+        </svg>
+        <div class="appt-info">
+          <div class="appt-title">Next Vet Appointment</div>
+          <div class="appt-date">March 15, 2026 · 10:00 AM</div>
+        </div>
+        <button class="appt-btn">Remind</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SCREEN 7 · CHATBOT
+  ═══════════════════════════════════════════ -->
+  <div id="screen-chat" class="screen">
+    <div class="chat-fullscreen">
+      <div class="chat-header">
+        <div class="chat-header-info">
+          <div class="chat-avatar">🤖</div>
+          <div>
+            <div class="chat-name">PetCare AI</div>
+            <div class="chat-status"><span class="chat-online-dot"></span>Online</div>
+          </div>
+        </div>
+        <button class="chat-clear-btn" onclick="clearChat()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px">
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+            <path d="M10 11v6M14 11v6" />
+            <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- VIP Plan: Call Vet banner -->
+      <div class="vip-call-banner" id="vip-call-banner" style="display:none">
+        <div class="vcb-text">
+          <span class="vcb-badge">👑 VET VIP</span>
+          <span>Speak directly with a licensed vet</span>
+        </div>
+        <div class="vcb-btns">
+          <button class="vcb-btn voice" onclick="alert('Connecting to vet... (demo)')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width:16px;height:16px">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            Call
+          </button>
+          <button class="vcb-btn video" onclick="alert('Starting video call... (demo)')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width:16px;height:16px">
+              <polygon points="23 7 16 12 23 17 23 7" />
+              <rect x="1" y="5" width="15" height="14" rx="2" />
+            </svg>
+            Video
+          </button>
+        </div>
+      </div>
+
+      <div class="chat-messages" id="chat-messages">
+        <div class="chat-bubble bot">
+          <div class="bubble-text">👋 สวัสดีครับ! ผม PetCare AI ผู้ช่วยดูแลสุขภาพสัตว์เลี้ยงแสนรู้ของคุณ
+            🐶🐱<br /><br />วันนี้มีอะไรให้ผมช่วยดูแลน้องๆ บ้างไหมครับ? พิมพ์ถามอาการเบื้องต้น
+            หรือส่งรูปภาพมาให้ผมวิเคราะห์ได้เลยนะครับ 😊</div>
+          <div class="bubble-time">Now</div>
+        </div>
+
+        <div class="chat-quick-replies" id="quick-replies">
+          <button class="quick-reply-btn" onclick="sendQuickReply('✨ ทดลองระบบ (Demo)')"
+            style="border-color:#8B5CF6; color:#8B5CF6;">✨ ทดลองระบบ</button>
+          <button class="quick-reply-btn" onclick="sendQuickReply('น้องหมาของฉันเกาตัวตลอดเวลา')">🐶
+            น้องเกาตัวตลอด</button>
+          <button class="quick-reply-btn" onclick="sendQuickReply('สัตว์เลี้ยงไม่ยอมกินข้าว')">🍽️
+            ไม่ยอมกินข้าว</button>
+          <button class="quick-reply-btn" onclick="sendQuickReply('วัคซีนควรฉีดตอนไหน')">💉 ตารางวัคซีน</button>
+        </div>
+      </div>
+
+      <div class="chat-input-bar">
+        <button class="chat-upload-btn" onclick="document.getElementById('chat-photo-input').click()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:20px;height:20px">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+        </button>
+        <input type="file" id="chat-photo-input" accept="image/*" style="display:none" onchange="sendChatImage(this)">
+        <input type="text" class="chat-input" id="chat-input" placeholder="พิมพ์ข้อความหรือส่งรูปภาพ..."
+          onkeydown="if(event.key==='Enter')sendChat()" />
+        <button class="chat-send-btn" onclick="sendChat()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="width:20px;height:20px">
+            <line x1="22" y1="2" x2="11" y2="13" />
+            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       SCREEN - OWNER PROFILE
+  ═══════════════════════════════════════════ -->
+  <div id="screen-owner" class="screen">
+    <div class="screen-inner">
+      <div class="owner-hero">
+        <label for="owner-photo-input" class="owner-avatar" id="owner-avatar" style="cursor:pointer;">
+          <svg class="owner-avatar-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M12 2C8.69 2 6 4.69 6 8a5.98 5.98 0 0 0 1.94 4.38C5.23 13.9 3 16.59 3 20v2h18v-2c0-3.41-2.23-6.1-4.94-7.62A5.98 5.98 0 0 0 18 8c0-3.31-2.69-6-6-6zm0 10a4 4 0 1 1 0-8 4 4 0 0 1 0 8z" />
+          </svg>
+          <div class="avatar-edit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="8" width="18" height="12" rx="2" />
+              <circle cx="12" cy="14" r="3" />
+              <path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2" />
+            </svg>
+          </div>
+        </label>
+        <input type="file" id="owner-photo-input" accept="image/*" style="display:none;"
+          onchange="handleOwnerPhotoUpload(event)">
+        <div class="owner-name" id="owner-display-name">Pet Owner</div>
+        <div class="owner-email" id="owner-display-email">owner@email.com</div>
+        <div class="owner-plan-pill" id="owner-plan-pill">Free Plan</div>
+      </div>
+      <div class="owner-section">
+        <div class="owner-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="owner-row-icon">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <div class="owner-row-info">
+            <div class="owner-row-label">Full Name</div>
+            <div class="owner-row-val" id="owner-row-name">Pet Owner</div>
+          </div>
+        </div>
+        <div class="owner-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="owner-row-icon">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" />
+          </svg>
+          <div class="owner-row-info">
+            <div class="owner-row-label">Email</div>
+            <div class="owner-row-val" id="owner-row-email">owner@email.com</div>
+          </div>
+        </div>
+        <div class="owner-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="owner-row-icon">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+          <div class="owner-row-info">
+            <div class="owner-row-label">Plan</div>
+            <div class="owner-row-val" id="owner-row-plan">Essential (Free)</div>
+          </div>
+          <button class="owner-upgrade-btn" onclick="goToScreen('screen-plans')">Upgrade</button>
+        </div>
+        <div class="owner-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="owner-row-icon">
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+          </svg>
+          <div class="owner-row-info" onclick="goToScreen('screen-home')">
+            <div class="owner-row-label">My Pets</div>
+            <div class="owner-row-val" id="owner-row-pets">1 pet registered</div>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            style="width:16px;height:16px;opacity:.35">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </div>
+      </div>
+      <button class="btn-secondary owner-logout-btn" onclick="doLogout()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon"
+          style="stroke:var(--slate)">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+        Sign Out
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       BOTTOM TAB BAR  (5 tabs now)
+  ═══════════════════════════════════════════ -->
+  <nav class="bottom-nav hidden" id="bottom-nav">
+    <!-- ④ active-indicator border shown via CSS on .nav-tab.active -->
+    <button class="nav-tab active" id="tab-home" onclick="navTo('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nav-icon">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+      </svg>
+      <span>Home</span>
+    </button>
+    <button class="nav-tab" id="tab-health" onclick="navTo('health')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nav-icon">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+      </svg>
+      <span>Health</span>
+    </button>
+    <button class="nav-tab" id="tab-scan" onclick="navTo('scan')">
+      <div class="scan-nav-fab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+          <circle cx="12" cy="13" r="4" />
+        </svg>
+      </div>
+      <span>Scan</span>
+    </button>
+    <button class="nav-tab" id="tab-chat" onclick="navTo('chat')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nav-icon">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+      </svg>
+      <span>AI Chat</span>
+    </button>
+    <button class="nav-tab" id="tab-profile" onclick="navTo('owner')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nav-icon">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
+      </svg>
+      <span>Profile</span>
+    </button>
+  </nav>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
