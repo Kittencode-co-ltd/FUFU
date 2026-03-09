@@ -1,0 +1,67 @@
+<div id="screen-help" class="screen">
+    <div class="screen-inner">
+        <div class="screen-header">
+            <button class="nav-back-btn" onclick="goToScreen('screen-owner')" style="margin-bottom: 20px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    style="width:20px;height:20px">
+                    <polyline points="15 18 9 12 15 6" />
+                </svg>
+            </button>
+            <div class="header-chip">Support</div>
+            <h1 class="screen-title">Help Center</h1>
+            <p class="screen-subtitle">How can we help you today?</p>
+        </div>
+
+        <div class="owner-section">
+            <div class="owner-row" onclick="reportBug()">
+                <div class="owner-row-icon" style="font-size: 20px;">🐛</div>
+                <div class="owner-row-info">
+                    <div class="owner-row-label">Report a Bug</div>
+                    <div class="owner-row-val">Found an issue? Let us know.</div>
+                </div>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    style="width:16px;height:16px;opacity:.35">
+                    <path d="M9 18l6-6-6-6" />
+                </svg>
+            </div>
+            <div class="owner-row" onclick="showTerms()">
+                <div class="owner-row-icon" style="font-size: 20px;">📄</div>
+                <div class="owner-row-info">
+                    <div class="owner-row-label">Terms & Conditions</div>
+                    <div class="owner-row-val">Read our terms of service</div>
+                </div>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    style="width:16px;height:16px;opacity:.35">
+                    <path d="M9 18l6-6-6-6" />
+                </svg>
+            </div>
+            <div class="owner-row" onclick="showPrivacy()">
+                <div class="owner-row-icon" style="font-size: 20px;">🔒</div>
+                <div class="owner-row-info">
+                    <div class="owner-row-label">Privacy Policy</div>
+                    <div class="owner-row-val">How we protect your data</div>
+                </div>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    style="width:16px;height:16px;opacity:.35">
+                    <path d="M9 18l6-6-6-6" />
+                </svg>
+            </div>
+        </div>
+
+        <div
+            style="margin-top:24px; padding:20px; background:linear-gradient(135deg, var(--teal-light), #e0f2fe); border-radius:var(--radius); text-align:center;">
+            <div style="font-size:32px; margin-bottom:8px;">📧</div>
+            <h3 style="color:var(--teal-dark); margin-bottom:8px; font-size:16px;">Need more help?</h3>
+            <p style="color:var(--slate-mid); font-size:13px; margin-bottom:16px;">Email us at support@fufupetcare.com
+            </p>
+            <button class="btn-primary" style="padding:12px;"
+                onclick="window.location.href='mailto:support@fufupetcare.com'">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                    <polyline points="22,6 12,13 2,6" />
+                </svg>
+                Email Support
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,254 @@
+<div id="screen-payment" class="screen">
+    <div class="screen-inner">
+        <!-- Header -->
+        <div class="screen-header">
+            <button class="nav-back-btn" onclick="goToScreen('screen-plans')" style="margin-bottom: 20px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    style="width:20px;height:20px">
+                    <polyline points="15 18 9 12 15 6" />
+                </svg>
+            </button>
+            <div class="header-chip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    style="width:12px; height:12px; margin-right:4px;">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                    <line x1="1" y1="10" x2="23" y2="10" />
+                </svg>
+                Secure Checkout
+            </div>
+            <h1 class="screen-title">Payment<br />Method</h1>
+            <p class="screen-subtitle">Choose how you want to pay for the <span id="payment-plan-name"
+                    style="font-weight:700;">Plan</span></p>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="pay-summary-card">
+            <div class="pay-summary-row">
+                <div class="pay-summary-label">Plan</div>
+                <div class="pay-summary-value" id="pay-summary-plan">VET VIP</div>
+            </div>
+            <div class="pay-summary-divider"></div>
+            <div class="pay-summary-row">
+                <div class="pay-summary-label">Amount</div>
+                <div class="pay-summary-amount" id="pay-summary-price">฿1,500/mo</div>
+            </div>
+        </div>
+
+        <!-- Security Badge -->
+        <div class="pay-security-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                style="width:14px; height:14px; flex-shrink:0;">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            <span>Your payment information is secure and encrypted</span>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="pay-methods-section">
+
+            <!-- E-Wallets -->
+            <div class="pay-section-label">E-Wallets</div>
+            <div class="pay-methods-list">
+                <div class="pay-method-card selected" onclick="selectPaymentMethod(this, 'promptpay')">
+                    <div class="pay-method-icon" style="background: linear-gradient(135deg, #003b80, #005bbd);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"
+                            style="width:22px; height:22px;">
+                            <rect x="3" y="3" width="18" height="18" rx="3" />
+                            <circle cx="8.5" cy="8.5" r="1.5" />
+                            <path d="M15 15v-3h-3v3h3z" />
+                            <path d="M9 15h0M15 9h0" />
+                        </svg>
+                    </div>
+                    <div class="pay-method-info">
+                        <div class="pay-method-name">PromptPay</div>
+                        <div class="pay-method-desc">QR Code / Phone Number</div>
+                    </div>
+                    <div class="pay-method-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"
+                            style="width:14px;height:14px;">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="pay-method-card" onclick="selectPaymentMethod(this, 'truemoney')">
+                    <div class="pay-method-icon" style="background: linear-gradient(135deg, #f37021, #ff9a44);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                            style="width:22px; height:22px;">
+                            <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            <path d="M12 8v8M9 11h6" />
+                        </svg>
+                    </div>
+                    <div class="pay-method-info">
+                        <div class="pay-method-name">TrueMoney Wallet</div>
+                        <div class="pay-method-desc">Pay via TrueMoney balance</div>
+                    </div>
+                    <div class="pay-method-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"
+                            style="width:14px;height:14px;">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="pay-method-card" onclick="selectPaymentMethod(this, 'linepay')">
+                    <div class="pay-method-icon" style="background: linear-gradient(135deg, #06c755, #00b94d);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                            style="width:22px; height:22px;">
+                            <path
+                                d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+                        </svg>
+                    </div>
+                    <div class="pay-method-info">
+                        <div class="pay-method-name">LINE Pay</div>
+                        <div class="pay-method-desc">Pay via LINE application</div>
+                    </div>
+                    <div class="pay-method-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"
+                            style="width:14px;height:14px;">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="pay-method-card" onclick="selectPaymentMethod(this, 'googlepay')">
+                    <div class="pay-method-icon" style="background: #fff; border: 1.5px solid #e2e8f0;">
+                        <svg viewBox="0 0 48 48" style="width:28px; height:28px;">
+                            <path fill="#4285F4"
+                                d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z" />
+                            <path fill="#34A853"
+                                d="M6.3 14.7l7 5.1C15.2 16.5 19.3 14 24 14c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2c-7.6 0-14.2 4.1-17.7 10.2z"
+                                opacity=".5" />
+                            <path fill="#FBBC05"
+                                d="M24 46c5.5 0 10.5-1.9 14.3-5l-6.6-5.5C29.8 37 27 38 24 38c-6 0-10.7-3.1-11.8-7.4l-7 5.4C8.4 42.1 15.7 46 24 46z"
+                                opacity=".5" />
+                            <path fill="#EA4335"
+                                d="M44.5 20H24v8.5h11.8c-.7 2.1-2.1 3.9-3.8 5.1l6.6 5.5C42.8 36 45.5 30.5 45.5 24c0-1.3-.2-2.7-.5-4z"
+                                opacity=".5" />
+                        </svg>
+                    </div>
+                    <div class="pay-method-info">
+                        <div class="pay-method-name">Google Pay</div>
+                        <div class="pay-method-desc">Pay with your Google account</div>
+                    </div>
+                    <div class="pay-method-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"
+                            style="width:14px;height:14px;">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="pay-method-card" onclick="selectPaymentMethod(this, 'applepay')">
+                    <div class="pay-method-icon" style="background: linear-gradient(135deg, #1c1c1e, #2c2c2e);">
+                        <svg viewBox="0 0 24 24" fill="white" style="width:22px; height:22px;">
+                            <path
+                                d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+                        </svg>
+                    </div>
+                    <div class="pay-method-info">
+                        <div class="pay-method-name">Apple Pay</div>
+                        <div class="pay-method-desc">Pay with Touch ID or Face ID</div>
+                    </div>
+                    <div class="pay-method-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"
+                            style="width:14px;height:14px;">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cards & Banking -->
+            <div class="pay-section-label">Cards & Banking</div>
+            <div class="pay-methods-list">
+                <div class="pay-method-card" onclick="selectPaymentMethod(this, 'creditcard')">
+                    <div class="pay-method-icon" style="background: linear-gradient(135deg, #1a1a2e, #16213e);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"
+                            style="width:22px; height:22px;">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                            <line x1="1" y1="10" x2="23" y2="10" />
+                            <line x1="5" y1="15" x2="10" y2="15" />
+                            <line x1="14" y1="15" x2="15" y2="15" />
+                        </svg>
+                    </div>
+                    <div class="pay-method-info">
+                        <div class="pay-method-name">Credit / Debit Card</div>
+                        <div class="pay-method-desc">Visa, Mastercard, JCB</div>
+                    </div>
+                    <div class="pay-method-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"
+                            style="width:14px;height:14px;">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="pay-method-card" onclick="selectPaymentMethod(this, 'mobilebanking')">
+                    <div class="pay-method-icon" style="background: linear-gradient(135deg, #4e2a84, #7c3aed);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"
+                            style="width:22px; height:22px;">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                            <line x1="12" y1="18" x2="12.01" y2="18" />
+                            <line x1="8" y1="6" x2="16" y2="6" />
+                        </svg>
+                    </div>
+                    <div class="pay-method-info">
+                        <div class="pay-method-name">Mobile Banking</div>
+                        <div class="pay-method-desc">SCB, KBank, BBL, Krungthai</div>
+                    </div>
+                    <div class="pay-method-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"
+                            style="width:14px;height:14px;">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="pay-method-card" onclick="selectPaymentMethod(this, 'paypal')">
+                    <div class="pay-method-icon" style="background: linear-gradient(135deg, #003087, #0070ba);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"
+                            style="width:22px; height:22px;">
+                            <path d="M7 21h-1a2 2 0 01-2-2V5a2 2 0 012-2h4a4 4 0 014 4v0a4 4 0 01-4 4H7" />
+                            <path d="M11 21h-1v-4" />
+                            <path d="M15 7h2a4 4 0 014 4v0a4 4 0 01-4 4h-5" />
+                        </svg>
+                    </div>
+                    <div class="pay-method-info">
+                        <div class="pay-method-name">PayPal</div>
+                        <div class="pay-method-desc">International payment</div>
+                    </div>
+                    <div class="pay-method-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"
+                            style="width:14px;height:14px;">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom CTA -->
+        <div class="fixed-bottom"
+            style="position:fixed; bottom:0; left:0; right:0; padding:20px 24px; background:linear-gradient(to top, rgba(248,250,252,1) 70%, rgba(248,250,252,0)); pointer-events:none;">
+            <button class="btn-primary pay-confirm-btn" onclick="confirmPayment()"
+                style="pointer-events:auto; position:relative; overflow:hidden;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"
+                    style="width:18px; height:18px; flex-shrink:0;">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+                <span id="pay-confirm-text">Confirm & Pay</span>
+            </button>
+            <div class="pay-ssl-text">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    style="width:11px; height:11px;">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0110 0v4" />
+                </svg>
+                Protected by 256-bit SSL Encryption
+            </div>
+        </div>
+
+    </div>
+</div>

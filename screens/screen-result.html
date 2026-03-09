@@ -1,0 +1,214 @@
+<div id="screen-result" class="screen">
+    <div class="screen-inner result-inner">
+
+        <div class="result-header-row">
+            <button class="back-btn" onclick="resetScan()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <h2 class="result-title">Diagnosis Report</h2>
+            <div class="result-actions">
+                <button class="share-btn" onclick="navTo('health')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13" />
+                    </svg>
+                    Share to your Vet
+                </button>
+            </div>
+        </div>
+
+        <div class="confidence-banner">
+            <div class="confidence-icon">🔬</div>
+            <div class="confidence-info">
+                <div class="confidence-label">Suspected Diagnosis</div>
+                <div class="confidence-name">Fungal Infection (Ringworm)</div>
+                <div class="confidence-label" style="margin-top:4px; color:var(--teal)">📌 Scanned Area: <span
+                        id="result-scanned-part">ดวงตา</span></div>
+            </div>
+            <div class="confidence-score">
+                <div class="score-num">94%</div>
+                <div class="score-label">Confidence</div>
+            </div>
+        </div>
+
+        <div class="heatmap-card">
+            <div class="heatmap-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="heatmap-icon">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
+                Visual Evidence · Infected Area
+            </div>
+            <div class="heatmap-img-wrap">
+                <div class="heatmap-base">🐶</div>
+                <div class="heatmap-overlay">
+                    <div class="heat-spot spot1"></div>
+                    <div class="heat-spot spot2"></div>
+                    <div class="heat-spot spot3"></div>
+                </div>
+                <div class="heatmap-legend">
+                    <div class="legend-item"><span class="legend-dot red"></span> High</div>
+                    <div class="legend-item"><span class="legend-dot orange"></span> Mid</div>
+                    <div class="legend-item"><span class="legend-dot yellow"></span> Low</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="treatment-section">
+            <div class="treatment-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="treat-icon">
+                    <path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                </svg>
+                Recommended Care &amp; Medication
+            </div>
+
+            <div class="treatment-text-block">
+                <strong>📝 First Aid Instructions:</strong><br />
+                • Clean the infected area gently with saline solution.<br />
+                • Prevent your pet from scratching or licking the area.<br />
+                • If symptoms worsen, consult a veterinarian immediately.
+            </div>
+
+            <!-- Medicine 1 -->
+            <div class="med-card"
+                style="display:flex; justify-content:space-between; align-items:center; padding:16px; background:var(--white); border-radius:12px; border:1px solid var(--slate-ghost); margin-bottom:12px;">
+                <div style="display:flex; gap:16px;">
+                    <div class="med-img-wrap"
+                        style="width:64px; height:64px; background:var(--off-white); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                        <span style="font-size:32px;">🧴</span>
+                    </div>
+                    <div class="med-info" style="display:flex; flex-direction:column; justify-content:center; gap:4px;">
+                        <div class="med-name" style="font-weight:700; font-size:15px; color:var(--slate);">Miconazole
+                            Cream 2%
+                        </div>
+                        <div class="med-usage" style="font-size:13px; color:var(--slate-lite);">Apply morning & evening
+                            (14 days)
+                        </div>
+                        <div class="med-tags" style="display:flex; gap:6px; margin-top:2px;">
+                            <span
+                                style="background:#CFFDE1; color:#0D9488; font-size:11px; font-weight:700; padding:2px 8px; border-radius:100px;">Antifungal</span>
+                            <span
+                                style="background:#CFFDE1; color:#0D9488; font-size:11px; font-weight:700; padding:2px 8px; border-radius:100px;">Topical</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="med-price"
+                    style="font-weight:900; color:var(--teal); font-size:16px; font-family:var(--font);">
+                    ฿350</div>
+            </div>
+
+            <!-- Medicine 2 -->
+            <div class="med-card secondary-med"
+                style="display:flex; justify-content:space-between; align-items:center; padding:16px; background:var(--white); border-radius:12px; border:1px solid var(--slate-ghost); margin-bottom:24px;">
+                <div style="display:flex; gap:16px;">
+                    <div class="med-img-wrap med-shampoo-wrap"
+                        style="width:64px; height:64px; background:#CFFDE1; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                        <span style="font-size:32px;">🧴</span>
+                    </div>
+                    <div class="med-info" style="display:flex; flex-direction:column; justify-content:center; gap:4px;">
+                        <div class="med-name" style="font-weight:700; font-size:15px; color:var(--slate);">Ketoconazole
+                            Shampoo
+                        </div>
+                        <div class="med-usage" style="font-size:13px; color:var(--slate-lite);">Bathe twice a week</div>
+                        <div class="med-tags" style="display:flex; gap:6px; margin-top:2px;">
+                            <span
+                                style="background:#CFFDE1; color:#0D9488; font-size:11px; font-weight:700; padding:2px 8px; border-radius:100px;">Antifungal</span>
+                            <span
+                                style="background:#CFFDE1; color:#0D9488; font-size:11px; font-weight:700; padding:2px 8px; border-radius:100px;">Shampoo</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="med-price"
+                    style="font-weight:900; color:var(--teal); font-size:16px; font-family:var(--font);">
+                    ฿480</div>
+            </div>
+
+            <div class="nearby-vets-section" style="margin-top:20px;">
+                <div class="treatment-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="treat-icon"
+                        style="color:var(--teal)">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                        <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    Nearby Clinics / Pharmacies
+                </div>
+
+                <!-- Dynamic Result Map -->
+                <div class="map-placeholder" id="result-map-wrap"
+                    style="width:100%; height:160px; background:#DFE5EE; border-radius:12px; display:flex; align-items:center; justify-content:center; border:1px solid var(--slate-ghost); margin-top:12px; overflow:hidden; position:relative;">
+
+                    <div id="result-map-loading"
+                        style="display:flex; flex-direction:column; align-items:center; color:var(--slate-lite);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            style="width:24px;height:24px;margin-bottom:8px">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg>
+                        <span>Loading map...</span>
+                    </div>
+
+                    <iframe id="result-map-frame" style="display:none; width:100%; height:100%; border:0;"
+                        loading="lazy"></iframe>
+                </div>
+
+                <div class="vet-list" style="margin-top:16px; display:flex; flex-direction:column; gap:12px;">
+                    <div class="vet-item"
+                        style="display:flex; justify-content:space-between; align-items:center; padding:16px; background:var(--white); border-radius:12px; border:1px solid var(--slate-ghost);">
+                        <div style="display:flex; flex-direction:column; gap:4px;">
+                            <strong style="font-size:15px; color:var(--slate);">PetCare Clinic</strong>
+                            <span style="color:var(--slate-lite); font-size:13px;">1.2 km away · Open until 20:00</span>
+                        </div>
+                        <button
+                            style="border:none;background:#CFFDE1;color:#0D9488;padding:8px 14px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer; font-family:var(--font);">Get
+                            Directions</button>
+                    </div>
+                </div>
+
+                <!-- Caution Banner -->
+                <div
+                    style="margin-top:24px; background:#FFF4E5; border:1px solid #FFD399; border-radius:12px; padding:16px; display:flex; gap:12px; align-items:flex-start;">
+                    <div style="color:#F97316; flex-shrink:0;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            style="width:20px;height:20px;">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                        </svg>
+                    </div>
+                    <div style="font-size:13px; color:#9A3412; font-weight:600; line-height:1.4;">
+                        Please consult a veterinarian before starting any medication or treatment.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="disclaimer-box" style="margin-top:20px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="disc-icon">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            กรุณาปรึกษาสัตวแพทย์ทุกครั้งก่อนเริ่มใช้ยาหรือการรักษาใดๆ
+        </div>
+    </div>
+
+    <div class="result-cta-stack">
+        <button class="btn-primary" onclick="alert('Ordering medicine...')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            Order Medicine
+        </button>
+        <button class="btn-secondary vip-consult-btn" onclick="goToScreen('screen-plans')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon">
+                <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            Consult Vet · VIP Plan
+        </button>
+    </div>
+</div>

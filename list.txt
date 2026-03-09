@@ -1,0 +1,121 @@
+FUFU petcare
+
+******** pet Hotel *********
+
+
+
+----------Splash Page---------
+[/] Show logo
+[/] show Powered by KITTEN CODE
+
+----------Home Page---------
+[/] banner
+[/] feature
+    - quick action
+        - nearby pet shop/care/grooming (partner) -> Show map/detail/direction
+        - nearby Vet clinic/hospital (partner) -> Show map/detail/direction
+    - card slide Advertise/Boardcast
+    - pet list (card slide) can search pet name
+[-] alert notification 
+    - next vacination
+    - warning vacination
+
+----------Auth Page---------
+[/] login/register
+[/] social login
+[] forgot password
+[] reset password
+[-] verify email ?
+
+-----------profile--------------
+[/] user profile
+[] edit profile 
+    - name
+    - profile picture
+    - email
+    - telephone
+[] change password
+[/] logout
+
+----------Scan Page---------
+[] scan picture 
+    - eye
+    - mouth
+    - ear
+    - body
+[] image analyse -> result -> record result
+
+----------Pet Profile Page---------
+[/] pet profile 
+    - name
+    - profile picture
+    - age 
+    - gender 
+    - breed 
+    - weight 
+    - Pet Microchip ID (if have can scan QR code) 
+[/] Add pet
+[/] edit pet - name / profile picture / age (auto increment still can change) / gender / weight 
+[x] delete pet
+
+----------vet consultation ----------
+[] AI chat
+[] call vet - vet 24hr.
+
+----------Health Record Page---------
+[/] pet health record (show card each pet can click and go to pet profile)
+    - pet name
+    - age
+    - breed
+    - status
+[/] Add vaccination table in pet profile (No, name, doctor, clinic, date, next date) name
+    - health prediction
+
+----------Vacination Page---------
+[/] history vacination
+    - NO. vacination
+    - vacination name
+    - vacination date
+    - vacination doctor
+    - vacination clinic/hospital
+    - next vacination
+[/] add vacination
+[/] edit vacination
+[/] delete vacination
+
+
+----------Subscription Page---------
+[/] subcription plan
+    - starter care plus 199 THB / month
+    - pro Protection 399 THB / month
+    - VET VIP Ultimate Concierge 599 THB / month
+[/] payment
+    - google payment
+    - apple pay
+    - credit card
+    - debit card
+
+----------Mini Game Page---------
+[/] mini game - for coin to excahange coupon or something
+[/] daily check-in 
+    - wheel spin to get coin can watch ads 3 times for 3 spins
+    - login bonus 7 days and 30 days for coins of something
+
+----------Help Center Page---------
+[-] report bug
+[-] terms & conditions
+[-] privacy policy
+
+----------Setting Page---------
+[] setting
+    - notification
+    - language
+    - theme (dark / light / system)
+    - 
+
+---------partner page--------- ******** สร้างหน้านี้ **********
+[] Vet Partner
+[] Pet Shop Partner
+
+- diagnosis result แนะนำ
+- ปรับหน้าสแกน + ai chat ถ้ามี token 

@@ -1,0 +1,171 @@
+<div id="screen-home" class="screen">
+    <div class="screen-inner">
+
+        <!-- ── Header ── -->
+        <div class="home-header">
+            <div>
+                <div class="home-greeting" id="home-greeting">Good evening 👋</div>
+                <div class="home-owner-name" id="home-owner-name">Welcome back!</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <div class="home-plan-badge" id="home-plan-badge">Free</div>
+                <button class="home-notif-btn" onclick="toggleNotifPanel()" id="home-notif-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        style="width:20px;height:20px;">
+                        <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                        <path d="M13.73 21a2 2 0 01-3.46 0" />
+                    </svg>
+                    <span class="notif-dot" id="notif-dot"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ── Vaccination Alert Banner ── -->
+        <div id="vacc-alert-panel" style="display:none; flex-direction:column; gap:8px; margin-bottom:16px;"></div>
+
+        <!-- ── Ad / Broadcast Carousel ── -->
+        <div class="home-ad-wrap" id="home-ad-wrap">
+            <div class="home-ad-track" id="home-ad-track">
+                <div class="home-ad-card" style="background:linear-gradient(135deg,#0d9488,#0f766e);">
+                    <div class="ad-badge">Partner Offer</div>
+                    <div class="ad-title">Free Grooming Session</div>
+                    <div class="ad-sub">First visit at Happy Paws Salon — save ฿300</div>
+                    <button class="ad-btn">Book Now →</button>
+                </div>
+                <div class="home-ad-card" style="background:linear-gradient(135deg,#7c3aed,#4e2a84);">
+                    <div class="ad-badge">New</div>
+                    <div class="ad-title">VET VIP Plan</div>
+                    <div class="ad-sub">24/7 live vet consultation from ฿599/mo</div>
+                    <button class="ad-btn" onclick="goToScreen('screen-plans')">Upgrade →</button>
+                </div>
+                <div class="home-ad-card" style="background:linear-gradient(135deg,#f37021,#e05a0a);">
+                    <div class="ad-badge">Tip</div>
+                    <div class="ad-title">Vaccination Reminder</div>
+                    <div class="ad-sub">Keep your pet protected — check your records today</div>
+                    <button class="ad-btn" onclick="navTo('health')">View Records →</button>
+                </div>
+            </div>
+            <div class="ad-dots" id="ad-dots">
+                <span class="ad-dot active"></span>
+                <span class="ad-dot"></span>
+                <span class="ad-dot"></span>
+            </div>
+        </div>
+
+        <!-- ── Quick Actions ── -->
+        <div class="section-title-row" style="margin-bottom:14px">
+            <span class="section-title">Quick Actions</span>
+        </div>
+        <div class="quick-action-grid">
+            <button class="quick-action-card" onclick="navTo('game')">
+                <div class="qa-icon" style="background:#F59E0B"><svg viewBox="0 0 24 24" fill="none" stroke="white"
+                        stroke-width="2" style="width:22px;height:22px">
+                        <polyline points="20 12 20 22 4 22 4 12" />
+                        <rect x="2" y="7" width="20" height="5" />
+                        <line x1="12" y1="22" x2="12" y2="7" />
+                        <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+                        <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+                    </svg></div>
+                <div class="qa-label">Reward</div>
+            </button>
+            <button class="quick-action-card" onclick="openNearbyMap('petshop')">
+                <div class="qa-icon" style="background:#ec4899"><svg viewBox="0 0 24 24" fill="none" stroke="white"
+                        stroke-width="2" style="width:22px;height:22px">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg></div>
+                <div class="qa-label">Pet Shop</div>
+            </button>
+            <button class="quick-action-card" onclick="openNearbyMap('vet')">
+                <div class="qa-icon" style="background:#10b981"><svg viewBox="0 0 24 24" fill="none" stroke="white"
+                        stroke-width="2" style="width:22px;height:22px">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                    </svg></div>
+                <div class="qa-label">Nearby Vet</div>
+            </button>
+            <button class="quick-action-card" onclick="goToScreen('screen-plans')">
+                <div class="qa-icon gold"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                        style="width:22px;height:22px">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg></div>
+                <div class="qa-label">Upgrade</div>
+            </button>
+        </div>
+
+        <!-- ── My Pets ── -->
+        <div class="section-title-row" style="margin-top:22px; margin-bottom:12px">
+            <span class="section-title">My Pets</span>
+            <button class="add-pet-btn" id="add-pet-btn"
+                onclick="isLoggedIn() ? goToScreen('screen-profile') : showLoginModal('screen-profile')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    style="width:14px;height:14px">
+                    <path d="M12 5v14M5 12h14" />
+                </svg>
+                Add Pet
+            </button>
+        </div>
+
+        <!-- Pet Search -->
+        <div class="home-pet-search-wrap" id="home-pet-search-wrap" style="display:none; margin-bottom:10px;">
+            <div style="position:relative;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:#94a3b8;pointer-events:none;">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input type="text" id="home-pet-search" placeholder="Search pets…" oninput="filterHomePets(this.value)"
+                    style="width:100%;padding:10px 14px 10px 38px;border:1.5px solid var(--slate-ghost);border-radius:var(--radius-sm);font-family:var(--font);font-size:13.5px;color:var(--slate);background:var(--white);outline:none;" />
+            </div>
+        </div>
+
+        <!-- Pet Cards with pagination -->
+        <div class="pet-cards-list" id="pet-cards-list">
+            <!-- Rendered by JS -->
+        </div>
+        <!-- Pagination dots for pet cards -->
+        <div id="pet-page-dots" style="display:none; justify-content:center; gap:6px; margin-top:12px;"></div>
+
+        <!-- ── Nearby Map Modal ── -->
+        <div id="nearby-modal"
+            style="display:none; position:fixed; inset:0; z-index:500; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px);"
+            onclick="if(event.target===this)closeNearbyModal()">
+            <div id="nearby-modal-content"
+                style="position:absolute; bottom:0; left:0; right:0; max-height:85vh; background:var(--white); border-radius:24px 24px 0 0; display:flex; flex-direction:column; transform:translateY(100%); transition:transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);">
+                <!-- Drag Handle -->
+                <div id="nearby-drag-handle"
+                    style="width:100%; padding:20px 12px 12px; display:flex; justify-content:center; align-items:center; cursor:grab; flex-shrink:0; position:relative; z-index:10;">
+                    <div style="width:40px; height:5px; background:var(--slate-ghost); border-radius:100px;"></div>
+                    <span
+                        style="position:absolute; font-size:10px; color:var(--slate-ghost); transform:translateY(12px);">SLIDE
+                        DOWN</span>
+                </div>
+
+                <div
+                    style="padding:0 20px 16px; display:flex; justify-content:space-between; align-items:center; flex-shrink:0;">
+                    <div>
+                        <div style="font-size:16px; font-weight:800; color:var(--slate);" id="nearby-modal-title">Nearby
+                            Places</div>
+                        <div style="font-size:12px; color:var(--slate-lite); margin-top:2px;" id="nearby-modal-sub">
+                            Partner locations near you</div>
+                    </div>
+                    <button onclick="closeNearbyModal()"
+                        style="background:var(--off-white);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:18px;color:var(--slate-lite);">×</button>
+                </div>
+
+                <!-- Map Container -->
+                <div style="padding:0 20px 12px; flex-shrink:0;">
+                    <div id="nearby-map-container"
+                        style="width:100%; height:200px; border-radius:16px; background:var(--off-white); border:1px solid var(--slate-ghost); overflow:hidden; z-index:0;">
+                    </div>
+                </div>
+
+                <!-- Shop List -->
+                <div id="nearby-places-list"
+                    style="overflow-y:auto; padding:0 20px 20px; display:flex; flex-direction:column; gap:12px; max-height: 40vh;">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

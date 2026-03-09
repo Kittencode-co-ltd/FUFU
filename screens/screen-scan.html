@@ -1,0 +1,60 @@
+<div id="screen-scan" class="screen">
+    <div class="scan-fullscreen">
+        <div class="scan-bg"></div>
+
+        <div class="scan-header-bar">
+            <button class="scan-back-btn" onclick="goToScreen('screen-home')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <div class="scan-mode-badge" id="scan-mode-badge">Eyes Mode</div>
+            <button class="scan-ctrl-btn secondary" title="Flash"
+                style="background: rgba(255,255,255,0.15); width:36px; height:36px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="viewfinder-wrap">
+            <div class="viewfinder" id="viewfinder">
+                <div class="scan-grid"></div>
+                <div class="vf-corner tl"></div>
+                <div class="vf-corner tr"></div>
+                <div class="vf-corner bl"></div>
+                <div class="vf-corner br"></div>
+                <div class="scan-line" id="scan-line"></div>
+                <div class="vf-pet-preview">
+                    <div class="vf-pet-circle" id="vf-pet-circle">🐶</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scan-status-bar" style="margin-bottom:8px;">
+            <div class="scan-status-text" id="scan-status-text"
+                style="background: rgba(40,40,30,0.8); padding:10px 20px; border-radius:100px; color:white; font-size:14px; font-weight:600; display:inline-block;">
+                Align guides with Mochi's eyes & hold still</div>
+            <div class="scan-progress-bar" style="display:none;">
+                <div class="scan-progress-fill" id="scan-progress"></div>
+            </div>
+        </div>
+
+        <div class="scan-part-selector" id="scan-part-selector">
+            <button class="scan-part-btn active" onclick="selectScanPart(this, 'Eyes')">Eyes</button>
+            <button class="scan-part-btn" onclick="selectScanPart(this, 'Ear')">Ear</button>
+            <button class="scan-part-btn" onclick="selectScanPart(this, 'Skin')">Skin</button>
+            <button class="scan-part-btn" onclick="selectScanPart(this, 'Dental')">Dental</button>
+            <button class="scan-part-btn" onclick="selectScanPart(this, 'Motion')">Motion</button>
+        </div>
+
+        <div class="scan-controls" style="padding-bottom: 20px;">
+            <div style="width:44px"></div><!-- Spacer for alignment -->
+            <button class="scan-capture-btn" id="scan-capture-btn" onclick="startScan()"
+                style="width:80px; height:80px; border:4px solid white; background:transparent; box-shadow:none; padding:0; display:flex; align-items:center; justify-content:center;">
+                <div style="width:64px; height:64px; background:white; border-radius:50%;"></div>
+            </button>
+            <div style="width:44px"></div><!-- Spacer for alignment -->
+        </div>
+    </div>
+</div>

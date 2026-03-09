@@ -1,0 +1,188 @@
+<div id="screen-game" class="screen">
+    <div class="screen-inner" style="padding-bottom:100px;">
+
+        <!-- Header -->
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+            <button onclick="goToScreen('screen-home')"
+                style="background:var(--white); border:1px solid var(--slate-ghost); width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow-card); cursor:pointer; color:var(--slate); flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    style="width:18px;height:18px;">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <div>
+                <div
+                    style="display:inline-flex; align-items:center; background:#fef3c7; color:#92400e; font-size:10px; font-weight:800; letter-spacing:1.5px; padding:3px 10px; border-radius:100px; text-transform:uppercase; margin-bottom:2px;">
+                    🎮 Play & Earn</div>
+                <button onclick="resetGameData()"
+                    style="border:none;background:transparent;color:var(--slate-ghost);cursor:pointer;font-size:10px;text-decoration:underline;">Reset
+                    Data</button>
+                <h1 style="font-size:22px; font-weight:800; color:var(--slate); margin:0; line-height:1.2;">Lucky Spin
+                    🎰</h1>
+            </div>
+        </div>
+
+        <!-- Coin Balance -->
+        <div
+            style="background:linear-gradient(135deg,#fef9c3,#fde68a); border-radius:16px; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; box-shadow:0 4px 16px rgba(234,179,8,0.2);">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:28px;">🪙</span>
+                <div>
+                    <div
+                        style="font-size:11px; font-weight:700; color:#92400e; text-transform:uppercase; letter-spacing:1px;">
+                        Your Balance</div>
+                    <div style="font-size:26px; font-weight:900; color:#78350f;" id="game-coin-amount">0</div>
+                </div>
+            </div>
+            <div style="text-align:right; font-size:12px; color:#92400e; font-weight:600; line-height:1.5;">
+                <div>⚡ <span id="spin-count-display">0</span>/3 spins</div>
+                <div style="font-size:10px; opacity:0.7;">today's ads watched</div>
+            </div>
+        </div>
+
+        <!-- Spin Counter Dots -->
+        <div style="display:flex; justify-content:center; gap:8px; margin-bottom:16px;">
+            <div id="spin-dot-0"
+                style="width:12px; height:12px; border-radius:50%; background:var(--slate-ghost); transition:0.3s;">
+            </div>
+            <div id="spin-dot-1"
+                style="width:12px; height:12px; border-radius:50%; background:var(--slate-ghost); transition:0.3s;">
+            </div>
+            <div id="spin-dot-2"
+                style="width:12px; height:12px; border-radius:50%; background:var(--slate-ghost); transition:0.3s;">
+            </div>
+        </div>
+
+        <!-- Wheel -->
+        <div style="position:relative; display:flex; align-items:center; justify-content:center; margin-bottom:8px;">
+            <!-- Outer glow ring -->
+            <div
+                style="position:absolute; width:220px; height:220px; border-radius:50%; background:conic-gradient(#ef4444,#f97316,#eab308,#22c55e,#3b82f6,#8b5cf6,#ef4444); opacity:0.25; filter:blur(8px);">
+            </div>
+            <div class="game-wheel" id="game-wheel" style="position:relative; z-index:1;">
+                <div class="game-wheel-inner" id="game-wheel-inner">
+                    <div class="wheel-segment seg1">🪙 10</div>
+                    <div class="wheel-segment seg2">🎁 50</div>
+                    <div class="wheel-segment seg3">⭐ 5</div>
+                    <div class="wheel-segment seg4">💎 100</div>
+                    <div class="wheel-segment seg5">🪙 20</div>
+                    <div class="wheel-segment seg6">🎉 30</div>
+                </div>
+                <div class="wheel-pointer">▼</div>
+            </div>
+        </div>
+
+        <!-- Spin Buttons -->
+        <button id="btn-spin-free" class="btn-primary" onclick="spinWheelFree()"
+            style="margin-top:12px; background:linear-gradient(135deg,var(--teal),var(--teal-dark)); font-size:15px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"
+                style="width:18px;height:18px; margin-right:4px;">
+                <path d="M23 4v6h-6" />
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+            </svg>
+            Spin Now! (Daily Free)
+        </button>
+        <button id="btn-spin-ad" onclick="spinWheelAd()"
+            style="width:100%; margin-top:10px; padding:13px; border-radius:var(--radius); border:2px dashed #f59e0b; background:#fffbeb; color:#92400e; font-size:14px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; font-family:var(--font);">
+            📺 Watch Ad for 1 More Spin
+            <span
+                style="background:#f59e0b; color:white; font-size:11px; padding:2px 8px; border-radius:100px; font-weight:800;"
+                id="ad-spins-left">3 left</span>
+        </button>
+
+        <!-- Login Bonus Section -->
+        <div
+            style="margin-top:24px; background:linear-gradient(135deg,#ede9fe,#ddd6fe); border-radius:20px; padding:18px; box-shadow:0 4px 16px rgba(139,92,246,0.15);">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
+                <span style="font-size:22px;">🎁</span>
+                <div>
+                    <div style="font-size:15px; font-weight:800; color:#4c1d95;">Login Bonus</div>
+                    <div style="font-size:12px; color:#7c3aed;">Check in daily to earn milestone rewards!</div>
+                </div>
+            </div>
+            <div style="display:flex; gap:6px; justify-content:space-between; margin-bottom:12px;">
+                <!-- 7 days -->
+                <div id="bonus-7"
+                    style="flex:1; background:white; border-radius:12px; padding:10px 6px; text-align:center; border:2px solid var(--slate-ghost); transition:0.3s;">
+                    <div style="font-size:20px; margin-bottom:4px;">🌟</div>
+                    <div style="font-size:11px; font-weight:800; color:var(--slate);">7 Days</div>
+                    <div style="font-size:10px; color:#7c3aed; font-weight:700; margin-top:2px;">+50 🪙</div>
+                    <div id="bonus-7-streak" style="font-size:9px; color:var(--slate-lite); margin-top:2px;">0/7 days
+                    </div>
+                </div>
+                <!-- 15 days -->
+                <div id="bonus-15"
+                    style="flex:1; background:white; border-radius:12px; padding:10px 6px; text-align:center; border:2px solid var(--slate-ghost); transition:0.3s;">
+                    <div style="font-size:20px; margin-bottom:4px;">💫</div>
+                    <div style="font-size:11px; font-weight:800; color:var(--slate);">15 Days</div>
+                    <div style="font-size:10px; color:#7c3aed; font-weight:700; margin-top:2px;">+150 🪙</div>
+                    <div id="bonus-15-streak" style="font-size:9px; color:var(--slate-lite); margin-top:2px;">0/15 days
+                    </div>
+                </div>
+                <!-- 30 days -->
+                <div id="bonus-30"
+                    style="flex:1; background:white; border-radius:12px; padding:10px 6px; text-align:center; border:2px solid var(--slate-ghost); transition:0.3s;">
+                    <div style="font-size:20px; margin-bottom:4px;">👑</div>
+                    <div style="font-size:11px; font-weight:800; color:var(--slate);">30 Days</div>
+                    <div style="font-size:10px; color:#f59e0b; font-weight:700; margin-top:2px;">+500 🪙</div>
+                    <div id="bonus-30-streak" style="font-size:9px; color:var(--slate-lite); margin-top:2px;">0/30 days
+                    </div>
+                </div>
+            </div>
+            <button onclick="doLoginBonus()"
+                style="width:100%; padding:12px; border-radius:12px; border:none; background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; font-weight:800; font-size:14px; cursor:pointer; font-family:var(--font);">
+                ✅ Daily Check-in (+5 🪙)
+            </button>
+            <div id="bonus-status"
+                style="text-align:center; font-size:11px; color:#7c3aed; margin-top:8px; font-weight:600;"></div>
+        </div>
+
+        <!-- Reward Exchange -->
+        <div
+            style="display:flex; justify-content:space-between; align-items:center; margin-top:24px; margin-bottom:14px;">
+            <span style="font-size:15px; font-weight:800; color:var(--slate);">Reward Exchange</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+            <div onclick="redeemReward(100,'Free Shipping Coupon')"
+                style="display:flex; align-items:center; gap:14px; background:var(--white); padding:14px 16px; border-radius:16px; border:1px solid var(--slate-ghost); box-shadow:var(--shadow-card); cursor:pointer; transition:0.2s;">
+                <div
+                    style="width:44px; height:44px; border-radius:12px; background:#fef3c7; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0;">
+                    📦</div>
+                <div style="flex:1;">
+                    <div style="font-size:14px; font-weight:700; color:var(--slate);">Free Delivery</div>
+                    <div style="font-size:12px; color:var(--slate-lite);">Free shipping on medicine orders</div>
+                </div>
+                <div
+                    style="background:#fef3c7; color:#92400e; font-size:12px; font-weight:800; padding:6px 12px; border-radius:100px; white-space:nowrap;">
+                    🪙 100</div>
+            </div>
+            <div onclick="redeemReward(300,'5% Vet Discount')"
+                style="display:flex; align-items:center; gap:14px; background:var(--white); padding:14px 16px; border-radius:16px; border:1px solid var(--slate-ghost); box-shadow:var(--shadow-card); cursor:pointer; transition:0.2s;">
+                <div
+                    style="width:44px; height:44px; border-radius:12px; background:#ccfbf1; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0;">
+                    🩺</div>
+                <div style="flex:1;">
+                    <div style="font-size:14px; font-weight:700; color:var(--slate);">5% Vet Discount</div>
+                    <div style="font-size:12px; color:var(--slate-lite);">Discount on next consultation</div>
+                </div>
+                <div
+                    style="background:#ccfbf1; color:#0f766e; font-size:12px; font-weight:800; padding:6px 12px; border-radius:100px; white-space:nowrap;">
+                    🪙 300</div>
+            </div>
+            <div onclick="redeemReward(500,'10% Med Discount')"
+                style="display:flex; align-items:center; gap:14px; background:var(--white); padding:14px 16px; border-radius:16px; border:1px solid var(--slate-ghost); box-shadow:var(--shadow-card); cursor:pointer; transition:0.2s;">
+                <div
+                    style="width:44px; height:44px; border-radius:12px; background:#ede9fe; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0;">
+                    💊</div>
+                <div style="flex:1;">
+                    <div style="font-size:14px; font-weight:700; color:var(--slate);">10% Med Discount</div>
+                    <div style="font-size:12px; color:var(--slate-lite);">Discount on medicine orders</div>
+                </div>
+                <div
+                    style="background:#ede9fe; color:#6d28d9; font-size:12px; font-weight:800; padding:6px 12px; border-radius:100px; white-space:nowrap;">
+                    🪙 500</div>
+            </div>
+        </div>
+
+    </div>
+</div>

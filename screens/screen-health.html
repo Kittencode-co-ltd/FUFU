@@ -1,0 +1,121 @@
+<div id="screen-health" class="screen">
+    <div class="screen-inner">
+        <div class="screen-header">
+            <div class="header-chip">Health Dashboard</div>
+            <h1 class="screen-title">Health<br />Summary</h1>
+            <p class="screen-subtitle">Track your pet's wellness over time</p>
+        </div>
+
+        <div id="health-empty-state"
+            style="display:none; text-align:center; padding: 40px 20px; background:var(--white); border-radius:16px; border:1px dashed #cbd5e1; margin-top:20px;">
+            <div style="font-size:48px; margin-bottom:16px;">🐶</div>
+            <h3 style="color:var(--slate); margin-bottom:8px; font-weight:700;">No pet data available</h3>
+            <p style="color:var(--slate-lite); font-size:14px; margin-bottom:24px; line-height:1.5;">
+                Please add a pet to start logging its health and medical records.</p>
+            <button class="btn-primary" onclick="goToScreen('screen-profile')" style="margin:0 auto; max-width:200px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon">
+                    <path d="M12 5v14M5 12h14" />
+                </svg>
+                Add Pet
+            </button>
+        </div>
+
+        <div id="health-content-wrap">
+            <div id="health-pet-selector-list" class="pet-cards-list" style="margin-bottom:20px;"></div>
+
+            <!-- Health Score Ring -->
+            <div class="health-score-card">
+                <div class="health-ring-wrap">
+                    <svg class="health-ring-svg" viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="50" fill="none" stroke="#EEF2F7" stroke-width="10" />
+                        <circle cx="60" cy="60" r="50" fill="none" stroke="#0D9488" stroke-width="10"
+                            stroke-dasharray="314" stroke-dashoffset="75" stroke-linecap="round"
+                            transform="rotate(-90 60 60)" class="health-ring-arc" />
+                    </svg>
+                    <div class="health-ring-inner">
+                        <div class="health-score-num">76</div>
+                        <div class="health-score-label">Health Score</div>
+                    </div>
+                </div>
+                <div class="health-status-badges">
+                    <div class="health-badge green">🟢 Good Overall</div>
+                    <div class="health-badge orange">🟡 Skin – Monitor</div>
+                    <div class="health-badge green">🟢 Weight – Normal</div>
+                </div>
+            </div>
+
+            <!-- Basic Treatment / Care Guide -->
+            <div class="section-title-row"
+                style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+                <span class="section-title">Care &amp; Medication</span>
+            </div>
+            <div class="treatment-section"
+                style="background:var(--white); padding:16px; border-radius:var(--radius); box-shadow:var(--shadow-card); margin-bottom:20px;">
+                <div class="treatment-text-block"
+                    style="margin-bottom:0; box-shadow:none; border-left:3px solid var(--orange);">
+                    <strong>📝 First Aid Guidelines:</strong><br />
+                    • Ensure your pet stays hydrated and gets enough rest.<br />
+                    • Observe for abnormal symptoms like lethargy or loss of appetite.<br />
+                    • Seek immediate veterinary care for severe symptoms.
+                </div>
+            </div>
+
+            <!-- Nearby Vet Clinics & Pharmacy -->
+            <div class="section-title-row">
+                <span class="section-title">Nearby Clinics &amp; Pharmacies</span>
+            </div>
+            <div class="nearby-vets-section" style="margin-bottom:20px;">
+                <div id="health-map"
+                    style="width:100%; height:180px; background:#DFE5EE; border-radius:12px; border:1px solid var(--slate-ghost); overflow:hidden; position:relative; z-index:1;">
+                </div>
+
+                <div class="vet-list" id="health-vet-list"
+                    style="margin-top:16px; display:flex; flex-direction:column; gap:12px;">
+                    <!-- Vet list items dynamically populated from JSON -->
+                </div>
+            </div>
+
+            <!-- Scan History Timeline -->
+            <div class="section-title-row">
+                <span class="section-title">Scan History</span>
+                <span class="section-see-all">See All</span>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item active-result">
+                    <div class="timeline-dot teal"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-date">Today · Mar 1, 2026</div>
+                        <div class="timeline-diag">Fungal Infection (Ringworm)</div>
+                        <div class="timeline-conf">94% Confidence · <span class="tag-warning">Treatment Needed</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot grey"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-date">Feb 12, 2026</div>
+                        <div class="timeline-diag">Mild Allergic Reaction</div>
+                        <div class="timeline-conf">87% Confidence · <span class="tag-ok">Resolved</span></div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot grey"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-date">Jan 28, 2026</div>
+                        <div class="timeline-diag">Routine Wellness Check</div>
+                        <div class="timeline-conf">100% · <span class="tag-ok">Healthy</span></div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot grey"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-date">Jan 5, 2026</div>
+                        <div class="timeline-diag">Eye Discharge (Mild)</div>
+                        <div class="timeline-conf">79% Confidence · <span class="tag-ok">Resolved</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Pet - Pet Health Scan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .content {
+            padding: 25px 20px;
+            padding-bottom: 120px;
+        }
+
+        /* Search and Add Pet Row */
+        .search-add-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .search-container {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            font-family: 'Kanit', sans-serif;
+            font-size: 15px;
+            transition: all 0.3s;
+            background: #f8fafc;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #48bb78;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(72, 187, 120, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 18px;
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #e2e8f0;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            color: #64748b;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .clear-search:hover {
+            background: #cbd5e0;
+        }
+
+        .clear-search.visible {
+            display: flex;
+        }
+
+        /* Add Pet Button - Compact */
+        .add-pet-btn-compact {
+            flex-shrink: 0;
+            width: 55px;
+            height: 55px;
+            border: 2px dashed #48bb78;
+            border-radius: 15px;
+            background: #f0fff4;
+            color: #48bb78;
+            font-family: 'Kanit', sans-serif;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 0.3s;
+        }
+
+        .add-pet-btn-compact:hover {
+            background: #48bb78;
+            color: white;
+            border-style: solid;
+            transform: scale(1.05);
+        }
+
+        .add-pet-btn-compact:active {
+            transform: scale(0.95);
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-title-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #48bb78;
+        }
+
+        .pet-count-badge {
+            background: #e2e8f0;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Pagination Container */
+        .pagination-wrapper {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 25px;
+            touch-action: pan-y;
+        }
+
+        .pagination-container {
+            display: flex;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .pagination-page {
+            min-width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Pet Cards */
+        .pet-card {
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pet-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: #48bb78;
+            transform: scaleY(0);
+            transition: transform 0.3s;
+        }
+
+        .pet-card:hover {
+            border-color: #48bb78;
+            transform: translateX(5px);
+            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.2);
+        }
+
+        .pet-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .pet-card.selected {
+            border-color: #48bb78;
+            background: #f0fff4;
+            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+        }
+
+        .pet-card.selected::before {
+            transform: scaleY(1);
+        }
+
+        .pet-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .pet-status {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 20px;
+            height: 20px;
+            background: #48bb78;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+
+        .pet-info {
+            flex: 1;
+        }
+
+        .pet-info h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .pet-info p {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 3px;
+        }
+
+        .pet-health {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #48bb78;
+            font-weight: 500;
+        }
+
+        .pet-health i {
+            font-size: 14px;
+        }
+
+        .select-indicator {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 3px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .pet-card.selected .select-indicator {
+            background: #48bb78;
+            border-color: #48bb78;
+        }
+
+        .select-indicator i {
+            color: white;
+            font-size: 14px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s;
+        }
+
+        .pet-card.selected .select-indicator i {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Pagination Controls */
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .pagination-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #e2e8f0;
+            color: #64748b;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: #f0fff4;
+            border-color: #48bb78;
+            color: #48bb78;
+            transform: scale(1.1);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .pagination-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .pagination-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #cbd5e0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pagination-dot.active {
+            background: #48bb78;
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        .pagination-info {
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Guest Pet Option */
+        .guest-pet-section {
+            margin-bottom: 25px;
+        }
+
+        .guest-pet-card {
+            background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%);
+            border: 3px dashed #f59e0b;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .guest-pet-card:hover {
+            border-color: #d97706;
+            background: linear-gradient(135deg, #fdebd0 0%, #f59e0b 100%);
+            transform: translateX(5px);
+        }
+
+        .guest-pet-card.selected {
+            border-color: #d97706;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .guest-pet-card.selected .guest-pet-info h3,
+        .guest-pet-card.selected .guest-pet-info p,
+        .guest-pet-card.selected .guest-pet-info .no-save-notice {
+            color: white;
+        }
+
+        .guest-pet-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            flex-shrink: 0;
+        }
+
+        .guest-pet-info {
+            flex: 1;
+        }
+
+        .guest-pet-info h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 5px;
+        }
+
+        .guest-pet-info p {
+            font-size: 13px;
+            color: #b45309;
+            margin-bottom: 8px;
+        }
+
+        .no-save-notice {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(220, 38, 38, 0.15);
+            color: #dc2626;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .no-save-notice i {
+            font-size: 12px;
+        }
+
+        .guest-pet-card.selected .no-save-notice {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94a3b8;
+            display: none;
+        }
+
+        .no-results.visible {
+            display: block;
+        }
+
+        .no-results i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .no-results p {
+            font-size: 15px;
+        }
+
+        /* Start Scan Button */
+        .start-scan-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 180px);
+            max-width: 400px;
+            padding: 18px 30px;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-family: 'Kanit', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.4);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .start-scan-btn:hover {
+            transform: translateX(-50%) translateY(-3px);
+            box-shadow: 0 12px 35px rgba(72, 187, 120, 0.5);
+        }
+
+        .start-scan-btn:active {
+            transform: translateX(-50%) translateY(-1px);
+        }
+
+        .start-scan-btn:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .start-scan-btn.guest-mode {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+        }
+
+        .start-scan-btn.guest-mode:hover {
+            box-shadow: 0 12px 35px rgba(245, 158, 11, 0.5);
+        }
+
+        /* Swipe Indicator */
+        .swipe-hint {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+            margin-top: -15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .swipe-hint i {
+            animation: swipeAnimation 2s infinite;
+        }
+
+        @keyframes swipeAnimation {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(5px);
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 0;
+            }
+
+            .container {
+                border-radius: 0;
+            }
+
+            .search-add-row {
+                flex-direction: column;
+            }
+
+            .add-pet-btn-compact {
+                width: 100%;
+                height: 50px;
+                font-size: 16px;
+                gap: 8px;
+            }
+
+            .add-pet-btn-compact::before {
+                content: 'Add Pet';
+                font-family: 'Kanit', sans-serif;
+            }
+
+            .add-pet-btn-compact i {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1><i class="fas fa-paw"></i> Select Pet</h1>
+            <p>Choose a pet to scan health <span class="pet-count">10 pets</span></p>
+        </div>
+
+        <div class="content">
+            <!-- Search and Add Pet Row -->
+            <div class="search-add-row">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-box" id="searchBox" placeholder="Search pet name..."
+                        oninput="searchPets()">
+                    <button class="clear-search" id="clearSearch" onclick="clearSearch()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <button class="add-pet-btn-compact" onclick="addNewPet()" title="Add new pet">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+
+            <div class="section-title">
+                <div class="section-title-left">
+                    <i class="fas fa-heart"></i>
+                    My Pets
+                </div>
+                <span class="pet-count-badge" id="visibleCount">10 pets</span>
+            </div>
+
+            <!-- Pagination Wrapper -->
+            <div class="pagination-wrapper" id="paginationWrapper">
+                <div class="pagination-container" id="paginationContainer">
+                    <!-- Pages will be rendered here -->
+                </div>
+            </div>
+
+            <!-- Swipe Hint -->
+            <div class="swipe-hint" id="swipeHint">
+                <i class="fas fa-arrow-left"></i>
+                <span>Swipe to change page</span>
+                <i class="fas fa-arrow-right"></i>
+            </div>
+
+            <!-- Pagination Controls -->
+            <div class="pagination-controls">
+                <button class="pagination-btn" id="prevBtn" onclick="changePage(-1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+
+                <div class="pagination-dots" id="paginationDots">
+                    <!-- Dots will be rendered here -->
+                </div>
+
+                <button class="pagination-btn" id="nextBtn" onclick="changePage(1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <div class="pagination-info" id="paginationInfo">
+                Page 1 of 2
+            </div>
+
+            <!-- No Results -->
+            <div class="no-results" id="noResults">
+                <i class="fas fa-search"></i>
+                <p>No pets found</p>
+            </div>
+
+            <!-- Guest Pet Option -->
+            <div class="guest-pet-section">
+                <div class="section-title">
+                    <div class="section-title-left">
+                        <i class="fas fa-user-friends"></i>
+                        Other Options
+                    </div>
+                </div>
+
+                <div class="guest-pet-card" onclick="selectGuestPet(this)">
+                    <div class="guest-pet-icon">
+                        <i class="fas fa-dog" style="color: #92400e;"></i>
+                    </div>
+                    <div class="guest-pet-info">
+                        <h3>Not My Pet</h3>
+                        <p>Scan other people's pets or stray animals</p>
+                        <div class="no-save-notice">
+                            <i class="fas fa-ban"></i>
+                            <span>Results will not be saved</span>
+                        </div>
+                    </div>
+                    <div class="select-indicator">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="start-scan-btn" id="startScanBtn" onclick="startScan()" disabled>
+            <i class="fas fa-camera"></i>
+            <span id="scanBtnText">Select a pet to start scanning</span>
+        </button>
+    </div>
+
+    <script>
+        // Pet data
+        const pets = [
+            { id: 'Mochi', name: 'Mochi', type: 'Dog', breed: 'Golden Retriever', age: '3 years 2 months', emoji: '🐕', status: 'healthy', lastScan: '2 days ago' },
+            { id: 'Luna', name: 'Luna', type: 'Cat', breed: 'Persian', age: '2 years 5 months', emoji: '🐱', status: 'warning', lastScan: '1 week ago', warning: 'Eye check needed' },
+            { id: 'Coco', name: 'Coco', type: 'Rabbit', breed: 'Holland Lop', age: '1 year 8 months', emoji: '🐰', status: 'healthy', lastScan: '3 days ago' },
+            { id: 'Bonbon', name: 'Bonbon', type: 'Dog', breed: 'Pomeranian', age: '2 years 1 month', emoji: '🐕', status: 'healthy', lastScan: '5 days ago' },
+            { id: 'Thongkum', name: 'Thongkum', type: 'Cat', breed: 'Siamese', age: '4 years 3 months', emoji: '🐱', status: 'healthy', lastScan: '1 week ago' },
+            { id: 'Pudding', name: 'Pudding', type: 'Hamster', breed: 'Syrian', age: '8 months', emoji: '🐹', status: 'healthy', lastScan: '2 days ago' },
+            { id: 'Duckduck', name: 'Duckduck', type: 'Duck', breed: 'Call Duck', age: '1 year 2 months', emoji: '🦆', status: 'healthy', lastScan: '4 days ago' },
+            { id: 'Oreo', name: 'Oreo', type: 'Dog', breed: 'Husky', age: '3 years 6 months', emoji: '🐕', status: 'warning', lastScan: '2 weeks ago', warning: 'Skin check needed' },
+            { id: 'Milk', name: 'Milk', type: 'Cat', breed: 'Scottish Fold', age: '1 year 4 months', emoji: '🐱', status: 'healthy', lastScan: '3 days ago' },
+            { id: 'Noodle', name: 'Noodle', type: 'Bird', breed: 'Cockatiel', age: '2 years 8 months', emoji: '🦜', status: 'healthy', lastScan: '1 week ago' }
+        ];
+
+        let selectedPetName = null;
+        let isGuestPet = false;
+        let filteredPets = [...pets];
+        let currentPage = 0;
+        const petsPerPage = 3;
+        let totalPages = Math.ceil(filteredPets.length / petsPerPage);
+
+        // Touch/Swipe variables
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            renderPets();
+            setupSwipe();
+        });
+
+        function setupSwipe() {
+            const wrapper = document.getElementById('paginationWrapper');
+
+            wrapper.addEventListener('touchstart', handleTouchStart, { passive: true });
+            wrapper.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+            // Mouse events for desktop testing
+            wrapper.addEventListener('mousedown', handleMouseDown);
+            wrapper.addEventListener('mouseup', handleMouseUp);
+            wrapper.addEventListener('mouseleave', handleMouseUp);
+        }
+
+        function handleTouchStart(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }
+
+        function handleTouchEnd(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }
+
+        function handleMouseDown(e) {
+            touchStartX = e.screenX;
+            wrapper = e.currentTarget;
+            wrapper.addEventListener('mousemove', handleMouseMove);
+        }
+
+        function handleMouseMove(e) {
+            touchEndX = e.screenX;
+        }
+
+        function handleMouseUp(e) {
+            const wrapper = document.getElementById('paginationWrapper');
+            wrapper.removeEventListener('mousemove', handleMouseMove);
+            if (touchEndX !== 0) {
+                handleSwipe();
+            }
+            touchEndX = 0;
+        }
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Swipe left - next page
+                    if (currentPage < totalPages - 1) {
+                        changePage(1);
+                    }
+                } else {
+                    // Swipe right - previous page
+                    if (currentPage > 0) {
+                        changePage(-1);
+                    }
+                }
+            }
+            touchStartX = 0;
+            touchEndX = 0;
+        }
+
+        function renderPets() {
+            const container = document.getElementById('paginationContainer');
+            const dotsContainer = document.getElementById('paginationDots');
+            const noResults = document.getElementById('noResults');
+            const visibleCount = document.getElementById('visibleCount');
+            const swipeHint = document.getElementById('swipeHint');
+
+            container.innerHTML = '';
+            dotsContainer.innerHTML = '';
+
+            totalPages = Math.ceil(filteredPets.length / petsPerPage);
+
+            if (filteredPets.length === 0) {
+                noResults.classList.add('visible');
+                visibleCount.textContent = '0 pets';
+                swipeHint.style.display = 'none';
+                document.querySelector('.pagination-controls').style.display = 'none';
+                document.getElementById('paginationInfo').style.display = 'none';
+                return;
+            } else {
+                noResults.classList.remove('visible');
+                visibleCount.textContent = `${filteredPets.length} pets`;
+
+                if (totalPages > 1) {
+                    swipeHint.style.display = 'flex';
+                    document.querySelector('.pagination-controls').style.display = 'flex';
+                    document.getElementById('paginationInfo').style.display = 'block';
+                } else {
+                    swipeHint.style.display = 'none';
+                    document.querySelector('.pagination-controls').style.display = 'none';
+                    document.getElementById('paginationInfo').style.display = 'none';
+                }
+            }
+
+            // Create pages
+            for (let page = 0; page < totalPages; page++) {
+                const pageDiv = document.createElement('div');
+                pageDiv.className = 'pagination-page';
+
+                const start = page * petsPerPage;
+                const end = Math.min(start + petsPerPage, filteredPets.length);
+                const pagePets = filteredPets.slice(start, end);
+
+                pagePets.forEach(pet => {
+                    const card = createPetCard(pet);
+                    pageDiv.appendChild(card);
+                });
+
+                container.appendChild(pageDiv);
+
+                // Create dot
+                const dot = document.createElement('div');
+                dot.className = 'pagination-dot' + (page === currentPage ? ' active' : '');
+                dot.onclick = () => goToPage(page);
+                dotsContainer.appendChild(dot);
+            }
+
+            updatePagination();
+        }
+
+        function createPetCard(pet) {
+            const div = document.createElement('div');
+            div.className = 'pet-card';
+            div.onclick = (e) => {
+                if (!e.target.closest('.select-indicator')) {
+                    selectPet(div, pet.id, false);
+                }
+            };
+            div.dataset.petId = pet.id;
+
+            const healthIcon = pet.status === 'healthy' ? 'fa-heartbeat' : 'fa-exclamation-circle';
+            const healthText = pet.status === 'healthy' ? 'Healthy' : pet.warning;
+            const healthColor = pet.status === 'healthy' ? '#48bb78' : '#f59e0b';
+            const iconClass = pet.type === 'Bird' || pet.type === 'Duck' ? 'fa-dove' : 'fa-paw';
+
+            div.innerHTML = `
+            <div class="pet-avatar">
+                ${pet.emoji}
+                <div class="pet-status"></div>
+            </div>
+            <div class="pet-info">
+                <h3>${pet.name}</h3>
+                <p><i class="fas ${iconClass}"></i> ${pet.type} • ${pet.breed}</p>
+                <p><i class="fas fa-birthday-cake"></i> ${pet.age}</p>
+                <div class="pet-health" style="color: ${healthColor}">
+                    <i class="fas ${healthIcon}"></i>
+                    <span>${healthText} • Last scan: ${pet.lastScan}</span>
+                </div>
+            </div>
+            <div class="select-indicator">
+                <i class="fas fa-check"></i>
+            </div>
+        `;
+
+            return div;
+        }
+
+        function changePage(direction) {
+            const newPage = currentPage + direction;
+            if (newPage >= 0 && newPage < totalPages) {
+                goToPage(newPage);
+            }
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            updatePagination();
+        }
+
+        function updatePagination() {
+            const container = document.getElementById('paginationContainer');
+            const dots = document.querySelectorAll('.pagination-dot');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const info = document.getElementById('paginationInfo');
+
+            // Slide to page
+            container.style.transform = `translateX(-${currentPage * 100}%)`;
+
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentPage);
+            });
+
+            // Update buttons
+            prevBtn.disabled = currentPage === 0;
+            nextBtn.disabled = currentPage === totalPages - 1;
+
+            // Update info
+            info.textContent = `Page ${currentPage + 1} of ${totalPages}`;
+        }
+
+        function searchPets() {
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase().trim();
+            const clearBtn = document.getElementById('clearSearch');
+
+            if (searchTerm.length > 0) {
+                clearBtn.classList.add('visible');
+                filteredPets = pets.filter(pet =>
+                    pet.name.toLowerCase().includes(searchTerm) ||
+                    pet.type.toLowerCase().includes(searchTerm) ||
+                    pet.breed.toLowerCase().includes(searchTerm)
+                );
+            } else {
+                clearBtn.classList.remove('visible');
+                filteredPets = [...pets];
+            }
+
+            currentPage = 0;
+            selectedPetName = null;
+            isGuestPet = false;
+            document.querySelectorAll('.pet-card, .guest-pet-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            updateStartButton();
+            renderPets();
+        }
+
+        function clearSearch() {
+            document.getElementById('searchBox').value = '';
+            searchPets();
+            document.getElementById('searchBox').focus();
+        }
+
+        function selectPet(element, petName, guest) {
+            document.querySelectorAll('.pet-card, .guest-pet-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            element.classList.add('selected');
+            selectedPetName = petName;
+            isGuestPet = guest;
+            updateStartButton();
+        }
+
+        function selectGuestPet(element) {
+            document.querySelectorAll('.pet-card, .guest-pet-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            element.classList.add('selected');
+            selectedPetName = 'Guest';
+            isGuestPet = true;
+            updateStartButton();
+        }
+
+        function updateStartButton() {
+            const btn = document.getElementById('startScanBtn');
+            const btnText = document.getElementById('scanBtnText');
+
+            if (!selectedPetName) {
+                btn.disabled = true;
+                btn.className = 'start-scan-btn';
+                btnText.textContent = 'Select a pet to start scanning';
+            } else if (isGuestPet) {
+                btn.disabled = false;
+                btn.className = 'start-scan-btn guest-mode';
+                btnText.textContent = 'Scan (Not Saved)';
+            } else {
+                btn.disabled = false;
+                btn.className = 'start-scan-btn';
+                btnText.textContent = 'Start Scanning';
+            }
+        }
+
+        function startScan() {
+            if (!selectedPetName) return;
+
+            let url = `scan.html?pet=${selectedPetName}&guest=${isGuestPet}`;
+            if (isGuestPet) {
+                url += '&noSave=true';
+            }
+
+            console.log('Starting scan:', {
+                pet: selectedPetName,
+                isGuest: isGuestPet,
+                noSave: isGuestPet
+            });
+
+            window.location.href = url;
+        }
+
+        function addNewPet() {
+            alert('Open add new pet form');
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+</body>
+
+</html>

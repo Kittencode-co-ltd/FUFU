@@ -1,0 +1,20 @@
+<div id="screen-onboarding" class="screen">
+    <div class="ob-wrap">
+        <button class="ob-skip-btn" onclick="skipOnboarding()">ข้าม</button>
+        <div class="ob-slide-area">
+            <div class="ob-icon" id="ob-icon">🐾</div>
+            <h2 class="ob-title" id="ob-title">ดูแลสัตว์เลี้ยงของคุณ</h2>
+            <p class="ob-sub" id="ob-sub">ครบทุกความต้องการในแอปเดียว</p>
+        </div>
+        <div class="ob-dots">
+            <span class="ob-dot active"></span>
+            <span class="ob-dot"></span>
+            <span class="ob-dot"></span>
+        </div>
+        <div class="ob-nav-row">
+            <button class="ob-nav-btn" id="ob-prev-btn" style="visibility:hidden"
+                onclick="showOnboardingSlide(onboardingSlide - 1)">← ก่อนหน้า</button>
+            <button class="ob-nav-btn primary" id="ob-next-btn" onclick="showOnboardingSlide(1)">ถัดไป →</button>
+        </div>
+    </div>
+</div>

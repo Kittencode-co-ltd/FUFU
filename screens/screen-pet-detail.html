@@ -1,0 +1,113 @@
+<div id="screen-pet-detail" class="screen">
+
+    <!-- Hero Photo Section -->
+    <div id="pet-detail-hero"
+        style="position:relative; width:100%; height:220px; background:var(--slate-ghost); overflow:hidden; flex-shrink:0;">
+        <div id="pet-detail-photo"
+            style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:72px; background:linear-gradient(135deg,#e0f2f1,#b2dfdb);">
+        </div>
+        <!-- Dark gradient overlay -->
+        <div
+            style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.55) 100%); pointer-events:none;">
+        </div>
+
+        <!-- Back button — top left -->
+        <button onclick="goToScreen('screen-home')"
+            style="position:absolute; top:16px; left:16px; background:rgba(255,255,255,0.92); border:none; width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 12px rgba(0,0,0,0.18); cursor:pointer; color:var(--slate); z-index:2; backdrop-filter:blur(6px);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                style="width:18px;height:18px;">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+        </button>
+
+        <!-- Camera icon to change photo — top right -->
+        <label for="pet-detail-photo-input"
+            style="position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.92); border:none; width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 12px rgba(0,0,0,0.18); cursor:pointer; color:var(--teal); z-index:2; backdrop-filter:blur(6px);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                <circle cx="12" cy="13" r="4" />
+            </svg>
+        </label>
+        <input id="pet-detail-photo-input" type="file" accept="image/*" style="display:none;"
+            onchange="handlePetDetailPhotoChange(this)" />
+
+        <!-- Pet name + chip overlaid at bottom -->
+        <div style="position:absolute; bottom:0; left:0; right:0; padding:16px 20px; z-index:2;">
+            <div
+                style="display:inline-block; background:rgba(255,255,255,0.22); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.35); color:#fff; font-size:10px; font-weight:800; letter-spacing:1.5px; padding:3px 10px; border-radius:100px; margin-bottom:6px; text-transform:uppercase;">
+                Pet Profile</div>
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+                <h1 id="pet-detail-name"
+                    style="font-size:22px; font-weight:800; color:#fff; margin:0; text-shadow:0 1px 6px rgba(0,0,0,0.3);">
+                    Pet Name</h1>
+                <!-- Edit info button -->
+                <button onclick="editPet(window.currentViewPetIndex)"
+                    style="background:rgba(255,255,255,0.22); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.35); padding:7px 14px; border-radius:100px; color:#fff; font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:5px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        style="width:13px;height:13px;">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                    </svg>
+                    Edit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scrollable content -->
+    <div class="screen-inner" style="padding-top:20px; padding-bottom:100px;">
+
+        <!-- Info Card -->
+        <div
+            style="background:var(--white); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow-card); display:flex; flex-direction:column; gap:16px;">
+            <div
+                style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--slate-ghost); padding-bottom:12px;">
+                <span style="color:var(--slate-lite); font-size:14px;">Breed</span>
+                <strong style="color:var(--slate);" id="pet-detail-breed">-</strong>
+            </div>
+            <div
+                style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--slate-ghost); padding-bottom:12px;">
+                <span style="color:var(--slate-lite); font-size:14px;">Age</span>
+                <strong style="color:var(--slate);" id="pet-detail-age">-</strong>
+            </div>
+            <div
+                style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--slate-ghost); padding-bottom:12px;">
+                <span style="color:var(--slate-lite); font-size:14px;">Weight</span>
+                <strong style="color:var(--slate);" id="pet-detail-weight">-</strong>
+            </div>
+            <div
+                style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--slate-ghost); padding-bottom:12px;">
+                <span style="color:var(--slate-lite); font-size:14px;">Gender</span>
+                <strong style="color:var(--slate);" id="pet-detail-gender">-</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="color:var(--slate-lite); font-size:14px;">Microchip ID</span>
+                <strong style="color:var(--slate);" id="pet-detail-microchip">-</strong>
+            </div>
+        </div>
+
+        <!-- Vaccination Records Section -->
+        <div style="margin-top:24px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <h2 style="font-size:16px; font-weight:800; color:var(--slate); margin:0;">Vaccination Records</h2>
+                <button onclick="openVaccineModal(window.currentViewPetIndex)"
+                    style="background:var(--teal-light); color:var(--teal-dark); border:none; padding:6px 14px; border-radius:100px; font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:4px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        style="width:14px;height:14px;">
+                        <path d="M12 5v14m-7-7h14" />
+                    </svg>
+                    Add
+                </button>
+            </div>
+
+            <div id="pet-vaccination-list" style="display:flex; flex-direction:column; gap:12px;">
+                <!-- JS will populate -->
+                <div
+                    style="background:var(--white); border-radius:var(--radius); padding:24px 16px; box-shadow:var(--shadow-card); text-align:center; color:var(--slate-lite); font-size:14px;">
+                    💉 No vaccination records yet.
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
