@@ -1,20 +1,24 @@
 <div id="screen-onboarding" class="screen">
     <div class="ob-wrap">
-        <button class="ob-skip-btn" onclick="skipOnboarding()">ข้าม</button>
+        <button class="ob-skip-btn" onclick="skipOnboarding()">Skip</button>
         <div class="ob-slide-area">
-            <div class="ob-icon" id="ob-icon">🐾</div>
-            <h2 class="ob-title" id="ob-title">ดูแลสัตว์เลี้ยงของคุณ</h2>
-            <p class="ob-sub" id="ob-sub">ครบทุกความต้องการในแอปเดียว</p>
+            <div class="ob-icon-wrapper">
+                <div class="ob-icon" id="ob-icon">🐾</div>
+            </div>
+            <h2 class="ob-title" id="ob-title">Pet Care Simplified</h2>
+            <p class="ob-sub" id="ob-sub">Everything your pet needs in one app.</p>
         </div>
-        <div class="ob-dots">
-            <span class="ob-dot active"></span>
-            <span class="ob-dot"></span>
-            <span class="ob-dot"></span>
+        <div class="ob-dots-wrapper">
+            <div class="ob-dots">
+                <span class="ob-dot active"></span>
+                <span class="ob-dot"></span>
+                <span class="ob-dot"></span>
+            </div>
         </div>
         <div class="ob-nav-row">
             <button class="ob-nav-btn" id="ob-prev-btn" style="visibility:hidden"
-                onclick="showOnboardingSlide(onboardingSlide - 1)">← ก่อนหน้า</button>
-            <button class="ob-nav-btn primary" id="ob-next-btn" onclick="showOnboardingSlide(1)">ถัดไป →</button>
+                onclick="showOnboardingSlide(onboardingSlide - 1)">&larr; Back</button>
+            <button class="ob-nav-btn primary" id="ob-next-btn" onclick="showOnboardingSlide(1)">Next &rarr;</button>
         </div>
     </div>
 </div>

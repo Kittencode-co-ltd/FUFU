@@ -83,6 +83,7 @@ let currentUser = { name: "", email: "", plan: 0 };
 let myPets = [];
 let currentHealthPetIndex = 0;
 let currentScanPetIndex = -1;
+let healthAssessmentChart = null;
 const PLAN_NAMES = [
   "Essential (Free)",
   "Care Plus ($5/mo)",
@@ -161,18 +162,18 @@ let onboardingSlide = 0;
 const ONBOARDING_SLIDES = [
   {
     icon: "🐾",
-    title: "ดูแลสัตว์เลี้ยงของคุณ",
-    sub: "ครบทุกความต้องการในแอปเดียว ตั้งแต่ข้อมูลสุขภาพไปจนถึงการนัดสัตวแพทย์",
+    title: "Pet Care Simplified",
+    sub: "Everything your pet needs in one app, from health records to vet appointments.",
   },
   {
     icon: "🔬",
-    title: "AI วิเคราะห์สุขภาพ",
-    sub: "สแกนด้วยกล้องเพื่อตรวจหาอาการผิดปกติ พร้อมรายงานโดยละเอียดทันที",
+    title: "AI Health Analysis",
+    sub: "Scan with your camera to detect abnormal symptoms and get detailed reports instantly.",
   },
   {
     icon: "💬",
-    title: "ปรึกษาได้ตุลอด 24 ชั่วโมง",
-    sub: "AI Chatbot พร้อมตอบทุกคำถามเกี่ยวกับสัตว์เลี้ยงของคุณ",
+    title: "24/7 Vet Consultation",
+    sub: "AI Chatbot ready to answer all your pet-related questions anytime, anywhere.",
   },
 ];
 
@@ -189,10 +190,10 @@ function showOnboardingSlide(n) {
     n === 0 ? "hidden" : "visible";
   const nextBtn = document.getElementById("ob-next-btn");
   if (n === ONBOARDING_SLIDES.length - 1) {
-    nextBtn.textContent = "เริ่มใช้งาน 🚀";
+    nextBtn.innerHTML = "Get Started 🚀";
     nextBtn.onclick = finishOnboarding;
   } else {
-    nextBtn.textContent = "ถัดไป →";
+    nextBtn.innerHTML = "Next &rarr;";
     nextBtn.onclick = () => showOnboardingSlide(n + 1);
   }
 }
@@ -1140,6 +1141,97 @@ function updatePetDetailScreen(index) {
 
   const microchipEl = document.getElementById("pet-detail-microchip");
   if (microchipEl) microchipEl.textContent = pet.microchip || "-";
+
+  // Health Assessment Chart
+  const ctx = document.getElementById("health-assessment-chart");
+  if (ctx) {
+    if (healthAssessmentChart) {
+      healthAssessmentChart.destroy();
+    }
+    
+    // Generate mock data if none exists
+    const labels = ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr"];
+    let scores = pet.healthScores;
+    if (!scores) {
+       // Mock decreasing or increasing health score between 70 and 100
+       scores = [85, 88, 86, 90, 92, 95];
+       pet.healthScores = scores; // Save to pet object
+    }
+
+    // Create actual vs prediction datasets
+    const actualData = [...scores, null]; // Pad with null for April
+    
+    // Generate a prediction based on the last score (+/- 3%)
+    let prediction = pet.healthPrediction;
+    if (!prediction) {
+       prediction = Math.min(100, Math.max(60, scores[5] + (Math.floor(Math.random() * 7) - 3)));
+       pet.healthPrediction = prediction;
+    }
+    const predictedData = [null, null, null, null, null, scores[5], prediction];
+    
+    healthAssessmentChart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: "Actual Data",
+            data: actualData,
+            borderColor: "var(--teal)",
+            backgroundColor: "rgba(13, 148, 136, 0.1)",
+            borderWidth: 2,
+            pointBackgroundColor: "var(--teal)",
+            pointRadius: 4,
+            fill: true,
+            tension: 0.3
+          },
+          {
+            label: "Prediction (1 Month)",
+            data: predictedData,
+            borderColor: "var(--teal)",
+            borderDash: [5, 5],
+            backgroundColor: "transparent",
+            borderWidth: 2,
+            pointBackgroundColor: "#fff",
+            pointBorderColor: "var(--teal)",
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            fill: false,
+            tension: 0.3
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { 
+            display: true,
+            position: 'top',
+            labels: { boxWidth: 12, usePointStyle: true }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return context.dataset.label + ": " + context.parsed.y + "%";
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 60,
+            max: 100,
+            grid: { color: "rgba(0,0,0,0.05)" }
+          },
+          x: {
+            grid: { display: false }
+          }
+        }
+      }
+    });
+  }
 
   // Vaccination Records
   const vacList = document.getElementById("pet-vaccination-list");
