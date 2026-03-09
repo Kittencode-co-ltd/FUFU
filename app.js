@@ -303,10 +303,23 @@ function goToScreen(screenId) {
     updateHealthScreenVisibility();
   }
   if (screenId === "screen-result") {
-    loadMap("result-map-frame", "result-map-loading");
+    loadResultPetshopMap();
   }
   if (screenId === "screen-pet-selection") {
     populatePetSelection();
+  }
+  if (screenId === "screen-scan") {
+    const petName = currentScanPetIndex >= 0 ? myPets[currentScanPetIndex].name : "your pet";
+    const emoji = currentScanPetIndex >= 0 ? myPets[currentScanPetIndex].emoji : "🐾";
+    const circle = document.getElementById("vf-pet-circle");
+    const statusText = document.getElementById("scan-status-text");
+    if (circle) circle.textContent = emoji;
+    if (statusText) statusText.textContent = `Align guides with ${petName}'s eyes & hold still`;
+    // reset part buttons to Eyes
+    document.querySelectorAll(".scan-part-btn").forEach((b) => b.classList.remove("active"));
+    const eyesBtn = document.querySelector(".scan-part-btn");
+    if (eyesBtn) eyesBtn.classList.add("active");
+    currentScanPart = "Eyes";
   }
 }
 
@@ -1781,7 +1794,7 @@ function loadMap(frameId, loadingId) {
   if (frame.src && frame.src.length > 0) return;
 
   const showMap = (lat, lon) => {
-    const mapUrl = `https://maps.google.com/maps?q=${lat},${lon}&hl=th&z=14&output=embed`;
+    const mapUrl = `https://maps.google.com/maps?q=pet+shop+near+${lat},${lon}&hl=th&z=14&output=embed`;
     frame.src = mapUrl;
     loading.style.display = "none";
     frame.style.display = "block";
@@ -1808,6 +1821,95 @@ function loadMap(frameId, loadingId) {
   );
 }
 
+/* ─── Result Screen: Petshop Leaflet Map ─── */
+let resultMapInstance = null;
+
+async function loadResultPetshopMap() {
+  const container = document.getElementById("result-map-container");
+  const listEl = document.getElementById("result-petshop-list");
+  if (!container) return;
+
+  // Load petshop data
+  let data;
+  try {
+    const res = await fetch("data/places.json");
+    const all = await res.json();
+    data = all["petshop"];
+  } catch (e) {
+    console.error("Failed to load petshop data:", e);
+    return;
+  }
+  if (!data) return;
+
+  // Populate list
+  if (listEl) {
+    listEl.innerHTML = data.places.map(p => `
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 16px; background:var(--white); border-radius:12px; border:1px solid var(--slate-ghost);">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="font-size:24px; width:40px; text-align:center;">${p.icon}</div>
+          <div>
+            <div style="font-weight:700; font-size:14px; color:var(--slate);">${p.name}</div>
+            <div style="font-size:12px; color:var(--slate-lite); margin-top:2px;">${p.detail} · ${p.dist}</div>
+          </div>
+        </div>
+        <button onclick="routeTo(${p.lat}, ${p.lng})"
+          style="border:none;background:var(--teal-light);color:var(--teal-dark);padding:8px 12px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;font-family:var(--font);white-space:nowrap;">
+          Directions
+        </button>
+      </div>
+    `).join("");
+  }
+
+  // Init or refresh Leaflet map
+  const centerLat = 16.7518928;
+  const centerLng = 100.1914052;
+
+  if (!resultMapInstance) {
+    resultMapInstance = L.map("result-map-container", { zoomControl: false })
+      .setView([centerLat, centerLng], 13);
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
+      attribution: "&copy; OpenStreetMap &copy; CARTO",
+    }).addTo(resultMapInstance);
+    L.control.zoom({ position: "bottomright" }).addTo(resultMapInstance);
+  } else {
+    resultMapInstance.invalidateSize();
+  }
+
+  // Clear old markers
+  if (resultMapInstance._rMarkers) {
+    resultMapInstance._rMarkers.forEach(m => resultMapInstance.removeLayer(m));
+  }
+  resultMapInstance._rMarkers = [];
+
+  // Current location pin
+  const myIcon = L.divIcon({
+    html: `<div style="background:#3b82f6;width:18px;height:18px;border-radius:50%;border:3px solid white;box-shadow:0 0 8px rgba(59,130,246,0.8);"></div>`,
+    className: "", iconSize: [18, 18], iconAnchor: [9, 9],
+  });
+  const myMarker = L.marker([centerLat, centerLng], { icon: myIcon }).addTo(resultMapInstance);
+  myMarker.bindPopup("<b>Your Location</b>");
+  resultMapInstance._rMarkers.push(myMarker);
+
+  // Place markers
+  const bounds = L.latLngBounds([[centerLat, centerLng]]);
+  data.places.forEach(p => {
+    if (!p.lat || !p.lng) return;
+    const icon = L.divIcon({
+      html: `<div style="background:#ec4899;width:32px;height:32px;border-radius:50%;border:2px solid white;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 6px rgba(0,0,0,0.3);">${p.icon}</div>`,
+      className: "", iconSize: [32, 32], iconAnchor: [16, 16],
+    });
+    const m = L.marker([p.lat, p.lng], { icon }).addTo(resultMapInstance);
+    m.bindPopup(`<b>${p.name}</b><br>${p.detail}`);
+    resultMapInstance._rMarkers.push(m);
+    bounds.extend([p.lat, p.lng]);
+  });
+
+  setTimeout(() => {
+    resultMapInstance.invalidateSize();
+    resultMapInstance.fitBounds(bounds, { padding: [20, 20] });
+  }, 200);
+}
+
 /* ─── AI Scan Flow ─── */
 const SCAN_STEPS = [
   { pct: 15, msg: "Initializing AI model..." },
@@ -1819,43 +1921,310 @@ const SCAN_STEPS = [
   { pct: 100, msg: "Analysis complete ✓" },
 ];
 
-function populatePetSelection() {
-  const list = document.getElementById("pet-selection-list");
-  if (!list) return;
-  list.innerHTML = "";
+let selFilteredPets = [];
+let selCurrentPage = 0;
+const selPetsPerPage = 3;
+let selTotalPages = 0;
+let selIsGuest = false;
+let selTouchStartX = 0;
+let selTouchEndX = 0;
 
-  if (myPets.length === 0) {
-    list.innerHTML = `
-      <div style="text-align:center; padding:30px 20px; color:var(--slate-lite);">
-        <div style="font-size:40px; margin-bottom:12px;">🐶</div>
-        You haven't added any pets yet.<br/>You can still scan as a guest, or add a pet in your profile.
-      </div>
-    `;
-    return;
+function populatePetSelection() {
+  selFilteredPets = [...myPets];
+  selCurrentPage = 0;
+  selIsGuest = false;
+  currentScanPetIndex = -1;
+  
+  const searchBox = document.getElementById('selSearchBox');
+  if (searchBox) searchBox.value = '';
+  const clearBtn = document.getElementById('selClearSearch');
+  if (clearBtn) clearBtn.classList.remove('visible');
+  
+  updateSelStartBtn();
+  renderSelPets();
+  setupSelSwipe();
+  
+  const headerCount = document.getElementById('sel-header-pet-count');
+  if (headerCount) headerCount.textContent = myPets.length + ' pets';
+}
+
+function renderSelPets() {
+  const container = document.getElementById('selPaginationContainer');
+  const dotsContainer = document.getElementById('selPaginationDots');
+  const noResults = document.getElementById('selNoResults');
+  const visibleCount = document.getElementById('selVisibleCount');
+  const swipeHint = document.getElementById('selSwipeHint');
+  const controls = document.getElementById('selPaginationControls');
+  const info = document.getElementById('selPaginationInfo');
+  
+  if (!container) return;
+
+  container.innerHTML = '';
+  if(dotsContainer) dotsContainer.innerHTML = '';
+
+  selTotalPages = Math.ceil(selFilteredPets.length / selPetsPerPage);
+
+  if (selFilteredPets.length === 0) {
+      if(noResults) noResults.classList.add('visible');
+      if(visibleCount) visibleCount.textContent = '0 pets';
+      if(swipeHint) swipeHint.style.display = 'none';
+      if(controls) controls.style.display = 'none';
+      if(info) info.style.display = 'none';
+  } else {
+      if(noResults) noResults.classList.remove('visible');
+      if(visibleCount) visibleCount.textContent = `${selFilteredPets.length} pets`;
+
+      if (selTotalPages > 1) {
+          if(swipeHint) swipeHint.style.display = 'flex';
+          if(controls) controls.style.display = 'flex';
+          if(info) info.style.display = 'block';
+      } else {
+          if(swipeHint) swipeHint.style.display = 'none';
+          if(controls) controls.style.display = 'none';
+          if(info) info.style.display = 'none';
+      }
+
+      // Create pages
+      for (let page = 0; page < selTotalPages; page++) {
+          const pageDiv = document.createElement('div');
+          pageDiv.className = 'sel-pagination-page';
+
+          const start = page * selPetsPerPage;
+          const end = Math.min(start + selPetsPerPage, selFilteredPets.length);
+          const pagePets = selFilteredPets.slice(start, end);
+
+          pagePets.forEach(pet => {
+              const originalIndex = myPets.indexOf(pet);
+              const card = createSelPetCard(pet, originalIndex);
+              pageDiv.appendChild(card);
+          });
+
+          container.appendChild(pageDiv);
+
+          // Create dot
+          if(dotsContainer) {
+              const dot = document.createElement('div');
+              dot.className = 'sel-pagination-dot' + (page === selCurrentPage ? ' active' : '');
+              dot.onclick = () => goToSelPage(page);
+              dotsContainer.appendChild(dot);
+          }
+      }
   }
 
-  myPets.forEach((pet, i) => {
-    const photoHtml = pet.photoSrc
-      ? `<img src="${pet.photoSrc}" alt="${pet.name}" style="width:100%; height:100%; object-fit:cover;">`
-      : `<div style="font-size:24px;">${pet.emoji}</div>`;
-      
-    const div = document.createElement("div");
-    div.className = "pet-card";
-    div.style.cursor = "pointer";
-    div.onclick = () => {
-      currentScanPetIndex = i;
-      goToScreen("screen-scan");
-    };
-    div.innerHTML = `
-      <div class="pet-card-photo" style="width:50px; height:50px; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center; background:var(--off-white);">${photoHtml}</div>
-      <div class="pet-card-info" style="flex:1; margin-left:12px;">
-        <div class="pet-card-name" style="font-weight:700; color:var(--slate); font-size:16px;">${pet.name}</div>
-        <div class="pet-card-breed" style="color:var(--slate-lite); font-size:13px;">${pet.meta}</div>
+  updateSelPagination();
+}
+
+function createSelPetCard(pet, originalIndex) {
+  const div = document.createElement('div');
+  div.className = 'sel-pet-card' + (currentScanPetIndex === originalIndex ? ' selected' : '');
+  div.onclick = (e) => {
+      if (!e.target.closest('.sel-select-indicator')) {
+          selectSelPet(div, originalIndex);
+      }
+  };
+
+  const healthScore = pet.score || 100;
+  const healthClass = healthScore > 80 ? 'healthy' : (healthScore > 60 ? 'warning' : 'critical');
+  const healthText = healthScore > 80 ? 'Healthy' : (healthScore > 60 ? 'Needs Attention' : 'Critical');
+  const healthIcon = healthScore > 80 ? 'fa-heartbeat' : 'fa-exclamation-circle';
+  const iconClass = pet.emoji === '🐱' ? 'fa-cat' : (pet.emoji === '🐰' ? 'fa-carrot' : 'fa-dog');
+  
+  let photoHtml;
+  if (pet.photoSrc) {
+      photoHtml = `<img src="${pet.photoSrc}" alt="${pet.name}">`;
+  } else {
+      photoHtml = `${pet.emoji}`;
+  }
+
+  div.innerHTML = `
+      <div class="sel-pet-avatar">
+          ${photoHtml}
+          <div class="sel-pet-status ${healthClass}"></div>
       </div>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px; color:var(--slate-ghost);"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    `;
-    list.appendChild(div);
+      <div class="sel-pet-info">
+          <h3>${pet.name}</h3>
+          <p><i class="fas ${iconClass}"></i> ${pet.emoji === '🐱' ? 'Cat' : 'Dog'} • ${pet.meta || 'Mixed'}</p>
+          <div class="sel-pet-health ${healthClass}">
+              <i class="fas ${healthIcon}"></i>
+              <span>${healthText}</span>
+          </div>
+      </div>
+      <div class="sel-select-indicator">
+          <i class="fas fa-check"></i>
+      </div>
+  `;
+  return div;
+}
+
+function changeSelPage(direction) {
+  const newPage = selCurrentPage + direction;
+  if (newPage >= 0 && newPage < selTotalPages) {
+      goToSelPage(newPage);
+  }
+}
+
+function goToSelPage(page) {
+  selCurrentPage = page;
+  updateSelPagination();
+}
+
+function updateSelPagination() {
+  const container = document.getElementById('selPaginationContainer');
+  const dots = document.querySelectorAll('.sel-pagination-dot');
+  const prevBtn = document.getElementById('selPrevBtn');
+  const nextBtn = document.getElementById('selNextBtn');
+  const info = document.getElementById('selPaginationInfo');
+
+  if (!container) return;
+
+  container.style.transform = `translateX(-${selCurrentPage * 100}%)`;
+
+  dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === selCurrentPage);
   });
+
+  if (prevBtn) prevBtn.disabled = selCurrentPage === 0;
+  if (nextBtn) nextBtn.disabled = selCurrentPage === selTotalPages - 1;
+
+  if (info) info.textContent = `Page ${selCurrentPage + 1} of ${selTotalPages}`;
+}
+
+function searchSelPets() {
+  const searchTerm = document.getElementById('selSearchBox').value.toLowerCase().trim();
+  const clearBtn = document.getElementById('selClearSearch');
+
+  if (searchTerm.length > 0) {
+      if(clearBtn) clearBtn.classList.add('visible');
+      selFilteredPets = myPets.filter(pet => 
+          pet.name.toLowerCase().includes(searchTerm) || 
+          (pet.meta && pet.meta.toLowerCase().includes(searchTerm))
+      );
+  } else {
+      if(clearBtn) clearBtn.classList.remove('visible');
+      selFilteredPets = [...myPets];
+  }
+
+  selCurrentPage = 0;
+  currentScanPetIndex = -1;
+  selIsGuest = false;
+  
+  document.querySelectorAll('.sel-pet-card, .sel-guest-pet-card').forEach(card => {
+      card.classList.remove('selected');
+  });
+  
+  updateSelStartBtn();
+  renderSelPets();
+}
+
+function clearSelSearch() {
+  const sb = document.getElementById('selSearchBox');
+  if(sb) {
+      sb.value = '';
+      searchSelPets();
+      sb.focus();
+  }
+}
+
+function selectSelPet(element, petIndex) {
+  document.querySelectorAll('.sel-pet-card, .sel-guest-pet-card').forEach(card => {
+      card.classList.remove('selected');
+  });
+
+  element.classList.add('selected');
+  currentScanPetIndex = petIndex;
+  selIsGuest = false;
+  updateSelStartBtn();
+}
+
+function selectSelGuest() {
+  const guestCard = document.getElementById('sel-card-guest');
+  if (!guestCard) return;
+  
+  document.querySelectorAll('.sel-pet-card, .sel-guest-pet-card').forEach(card => {
+      card.classList.remove('selected');
+  });
+
+  guestCard.classList.add('selected');
+  currentScanPetIndex = -1;
+  selIsGuest = true;
+  updateSelStartBtn();
+}
+
+function updateSelStartBtn() {
+  const btn = document.getElementById('selStartScanBtn');
+  const btnText = document.getElementById('selScanBtnText');
+  if (!btn || !btnText) return;
+
+  if (!selIsGuest && currentScanPetIndex === -1) {
+      btn.disabled = true;
+      btn.className = 'sel-start-scan-btn';
+      btnText.textContent = 'Select a pet to start scanning';
+  } else if (selIsGuest) {
+      btn.disabled = false;
+      btn.className = 'sel-start-scan-btn sel-guest-mode';
+      btnText.textContent = 'Scan (Not Saved)';
+  } else {
+      btn.disabled = false;
+      btn.className = 'sel-start-scan-btn';
+      btnText.textContent = 'Start Scanning';
+  }
+}
+
+function startSelectedScan() {
+  if (!selIsGuest && currentScanPetIndex === -1) return;
+  goToScreen('screen-scan');
+}
+
+function setupSelSwipe() {
+  const wrapper = document.getElementById('selPaginationWrapper');
+  if (!wrapper || wrapper.dataset.swipeInit === "true") return;
+  
+  wrapper.dataset.swipeInit = "true";
+  wrapper.addEventListener('touchstart', (e) => {
+    selTouchStartX = e.changedTouches[0].screenX;
+  }, {passive: true});
+  
+  wrapper.addEventListener('touchend', (e) => {
+    selTouchEndX = e.changedTouches[0].screenX;
+    handleSelSwipe();
+  }, {passive: true});
+  
+  // Mouse events
+  wrapper.addEventListener('mousedown', (e) => {
+      selTouchStartX = e.screenX;
+      wrapper.addEventListener('mousemove', handleSelMouseMove);
+  });
+  
+  wrapper.addEventListener('mouseup', handleSelMouseUp);
+  wrapper.addEventListener('mouseleave', handleSelMouseUp);
+}
+
+function handleSelMouseMove(e) {
+    selTouchEndX = e.screenX;
+}
+
+function handleSelMouseUp(e) {
+    const wrapper = document.getElementById('selPaginationWrapper');
+    wrapper.removeEventListener('mousemove', handleSelMouseMove);
+    if (selTouchEndX !== 0) {
+        handleSelSwipe();
+    }
+    selTouchEndX = 0;
+}
+
+function handleSelSwipe() {
+  const swipeThreshold = 50;
+  const diff = selTouchStartX - selTouchEndX;
+
+  if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+          if (selCurrentPage < selTotalPages - 1) changeSelPage(1);
+      } else {
+          if (selCurrentPage > 0) changeSelPage(-1);
+      }
+  }
+  selTouchStartX = 0;
+  selTouchEndX = 0;
 }
 
 let currentScanPart = "Eyes";
@@ -1866,12 +2235,10 @@ function selectScanPart(btn, part) {
     .forEach((b) => b.classList.remove("active"));
   btn.classList.add("active");
 
-  const badge = document.getElementById("scan-mode-badge");
-  if (badge) badge.textContent = part + " Mode";
-
+  const petName = currentScanPetIndex >= 0 ? myPets[currentScanPetIndex].name : "your pet";
   const statusText = document.getElementById("scan-status-text");
   if (statusText)
-    statusText.textContent = `Align guides with Mochi's ${part.toLowerCase()} & hold still`;
+    statusText.textContent = `Align guides with ${petName}'s ${part.toLowerCase()} & hold still`;
 }
 
 function startScan() {

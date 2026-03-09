@@ -8,14 +8,6 @@
                 </svg>
             </button>
             <h2 class="result-title">Diagnosis Report</h2>
-            <div class="result-actions">
-                <button class="share-btn" onclick="navTo('health')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13" />
-                    </svg>
-                    Share to your Vet
-                </button>
-            </div>
         </div>
 
         <div class="confidence-banner">
@@ -40,17 +32,14 @@
                 </svg>
                 Visual Evidence · Infected Area
             </div>
-            <div class="heatmap-img-wrap">
-                <div class="heatmap-base">🐶</div>
-                <div class="heatmap-overlay">
-                    <div class="heat-spot spot1"></div>
-                    <div class="heat-spot spot2"></div>
-                    <div class="heat-spot spot3"></div>
-                </div>
-                <div class="heatmap-legend">
-                    <div class="legend-item"><span class="legend-dot red"></span> High</div>
-                    <div class="legend-item"><span class="legend-dot orange"></span> Mid</div>
-                    <div class="legend-item"><span class="legend-dot yellow"></span> Low</div>
+            <div class="heatmap-img-wrap" style="border-radius:12px; overflow:hidden; position:relative;">
+                <img src="img/ringworm/ringworm1.jpg" alt="Ringworm infected area"
+                    style="width:100%; height:auto; display:block; border-radius:12px;"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div
+                    style="display:none; width:100%; height:160px; background:#1a2035; border-radius:12px; align-items:center; justify-content:center; flex-direction:column; gap:8px; color:#94a3b8; font-size:13px;">
+                    <span style="font-size:40px;">🦠</span>
+                    <span>Ringworm (visual evidence)</span>
                 </div>
             </div>
         </div>
@@ -131,38 +120,16 @@
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                         <circle cx="12" cy="10" r="3" />
                     </svg>
-                    Nearby Clinics / Pharmacies
+                    Nearby Pet Shops
                 </div>
 
                 <!-- Dynamic Result Map -->
-                <div class="map-placeholder" id="result-map-wrap"
-                    style="width:100%; height:160px; background:#DFE5EE; border-radius:12px; display:flex; align-items:center; justify-content:center; border:1px solid var(--slate-ghost); margin-top:12px; overflow:hidden; position:relative;">
-
-                    <div id="result-map-loading"
-                        style="display:flex; flex-direction:column; align-items:center; color:var(--slate-lite);">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            style="width:24px;height:24px;margin-bottom:8px">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                            <circle cx="12" cy="10" r="3" />
-                        </svg>
-                        <span>Loading map...</span>
-                    </div>
-
-                    <iframe id="result-map-frame" style="display:none; width:100%; height:100%; border:0;"
-                        loading="lazy"></iframe>
+                <!-- Leaflet Map (same as home screen) -->
+                <div id="result-map-container"
+                    style="width:100%; height:200px; border-radius:12px; background:var(--off-white); border:1px solid var(--slate-ghost); overflow:hidden; margin-top:12px; z-index:0;">
                 </div>
 
-                <div class="vet-list" style="margin-top:16px; display:flex; flex-direction:column; gap:12px;">
-                    <div class="vet-item"
-                        style="display:flex; justify-content:space-between; align-items:center; padding:16px; background:var(--white); border-radius:12px; border:1px solid var(--slate-ghost);">
-                        <div style="display:flex; flex-direction:column; gap:4px;">
-                            <strong style="font-size:15px; color:var(--slate);">PetCare Clinic</strong>
-                            <span style="color:var(--slate-lite); font-size:13px;">1.2 km away · Open until 20:00</span>
-                        </div>
-                        <button
-                            style="border:none;background:#CFFDE1;color:#0D9488;padding:8px 14px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer; font-family:var(--font);">Get
-                            Directions</button>
-                    </div>
+                <div id="result-petshop-list" style="margin-top:16px; display:flex; flex-direction:column; gap:12px;">
                 </div>
 
                 <!-- Caution Banner -->
@@ -195,14 +162,7 @@
     </div>
 
     <div class="result-cta-stack">
-        <button class="btn-primary" onclick="alert('Ordering medicine...')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon">
-                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-                <line x1="3" y1="6" x2="21" y2="6" />
-                <path d="M16 10a4 4 0 0 1-8 0" />
-            </svg>
-            Order Medicine
-        </button>
+
         <button class="btn-secondary vip-consult-btn" onclick="goToScreen('screen-plans')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-icon">
                 <path
