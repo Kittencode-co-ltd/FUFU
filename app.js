@@ -679,7 +679,6 @@ function updateHomeUI() {
   }
   updateGreeting();
   initAdCarousel();
-  updateVaccAlerts();
   // Show pet search only when pets exist
   const srchWrap = document.getElementById("home-pet-search-wrap");
   if (srchWrap) srchWrap.style.display = myPets.length >= 3 ? "block" : "none";
@@ -727,98 +726,6 @@ function initAdCarousel() {
   );
 }
 
-/* ─── Vaccination Alerts ─── */
-function updateVaccAlerts() {
-  const panel = document.getElementById("vacc-alert-panel");
-  const notifDot = document.getElementById("notif-dot");
-  if (!panel) return;
-
-  const alerts = [];
-
-  myPets.forEach((pet) => {
-    if (!pet.vaccinations) return;
-    pet.vaccinations.forEach((v) => {
-      if (!v.nextDate) return;
-      const next = new Date(
-        v.nextDate.replace(/(\d+)\s([A-Za-z]+)\s(\d+)/, "$1 $2 $3"),
-      );
-      const daysLeft = Math.ceil((next - Date.now()) / 86400000);
-      if (daysLeft <= 0) {
-        alerts.push({
-          type: "urgent",
-          icon: "🚨",
-          pet: pet.name,
-          vacc: v.name,
-          msg: `Overdue! ${pet.name}'s ${v.name} vaccination was due ${Math.abs(daysLeft)} day${Math.abs(daysLeft) !== 1 ? "s" : ""} ago`,
-        });
-      } else if (daysLeft <= 14) {
-        alerts.push({
-          type: "warning",
-          icon: "⚠️",
-          pet: pet.name,
-          vacc: v.name,
-          msg: `${pet.name}'s ${v.name} vaccination due in ${daysLeft} day${daysLeft !== 1 ? "s" : ""}`,
-        });
-      } else if (daysLeft <= 30) {
-        alerts.push({
-          type: "info",
-          icon: "💉",
-          pet: pet.name,
-          vacc: v.name,
-          msg: `Upcoming: ${pet.name}'s ${v.name} in ${daysLeft} days`,
-        });
-      }
-    });
-  });
-
-  if (alerts.length === 0) {
-    panel.style.display = "none";
-    if (notifDot) notifDot.classList.remove("active");
-    return;
-  }
-
-  panel.style.display = "flex";
-  if (notifDot) notifDot.classList.add("active");
-  panel.innerHTML = alerts
-    .map(
-      (a, i) => `
-    <div class="vacc-alert-card ${a.type}" onclick="navTo('health')">
-      <div class="vacc-alert-icon">${a.icon}</div>
-      <div class="vacc-alert-text">
-        <div class="vacc-alert-title">${a.type === "urgent" ? "Overdue Vaccination" : a.type === "warning" ? "Vaccination Due Soon" : "Vaccination Reminder"}</div>
-        <div class="vacc-alert-sub">${a.msg}</div>
-      </div>
-      <button class="vacc-alert-dismiss" onclick="event.stopPropagation();dismissAlert(${i})" title="Dismiss">×</button>
-    </div>
-  `,
-    )
-    .join("");
-}
-
-let dismissedAlerts = new Set();
-
-function dismissAlert(idx) {
-  dismissedAlerts.add(idx);
-  const panel = document.getElementById("vacc-alert-panel");
-  if (!panel) return;
-  const cards = panel.querySelectorAll(".vacc-alert-card");
-  if (cards[idx]) {
-    cards[idx].style.opacity = "0";
-    cards[idx].style.transition = "opacity 0.3s";
-    setTimeout(() => {
-      cards[idx].remove();
-      if (!panel.children.length) panel.style.display = "none";
-    }, 300);
-  }
-}
-
-function toggleNotifPanel() {
-  updateVaccAlerts();
-  const panel = document.getElementById("vacc-alert-panel");
-  if (!panel) return;
-  const showing = panel.style.display !== "none";
-  panel.style.display = showing ? "none" : "flex";
-}
 
 /* ─── Pet Search on Home ─── */
 function filterHomePets(query) {
