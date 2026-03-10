@@ -6,42 +6,108 @@
                     <path d="M19 12H5M12 19l-7-7 7-7" />
                 </svg>
             </button>
-            <div>
-                <div class="header-chip" style="margin-bottom:4px">Choose Your Plan</div>
-                <h1 class="screen-title" style="font-size:22px;margin:0">Premium Care,<br />Your Way</h1>
+            <div class="plans-header-area">
+                <div class="header-chip" style="margin-bottom:8px">Choose Your Plan</div>
+                <h1 class="screen-title" style="font-size:26px;margin:0;line-height:1.2;">
+                    <span class="gradient-text">Premium Care,</span><br />Your Way
+                </h1>
             </div>
         </div>
-        <p class="screen-subtitle" style="margin-bottom:20px">Upgrade anytime. Cancel anytime.</p>
+        <p class="screen-subtitle" style="margin-bottom:28px; font-size:15px;">Upgrade anytime. Cancel anytime.</p>
 
         <div class="plans-stack">
 
             <!-- Plan 1: Basic -->
             <div class="plan-card" id="plan-0" onclick="selectPlan(this,0)">
                 <div class="plan-top">
-                    <div class="plan-badge free">Free</div>
-                    <div class="plan-name">Essential</div>
-                    <div class="plan-price"><span class="plan-currency">฿</span>0<span class="plan-period">/mo</span>
+                    <div class="plan-header-left">
+                        <div class="plan-badge free">Free</div>
+                        <div class="plan-name">Essential</div>
+                    </div>
+                    <div class="plan-price-wrap">
+                        <div class="plan-price-row">
+                            <span class="plan-currency">฿</span>
+                            <span class="plan-price">0</span>
+                            <span class="plan-period">/mo</span>
+                        </div>
                     </div>
                 </div>
+                <div class="plan-divider"></div>
                 <ul class="plan-features">
-                    <li>Basic Pet Profile</li>
-                    <li>1 AI Scan / month</li>
-                    <li class="text-muted">Health Log</li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Create 1 Pet Profile</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>1 AI Scan / month</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Basic Health Logging</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>View Scan Results in App</span>
+                    </li>
                 </ul>
             </div>
 
             <!-- Plan 2: Starter -->
             <div class="plan-card" id="plan-1" onclick="selectPlan(this,1)">
                 <div class="plan-top">
-                    <div class="plan-badge starter">Starter</div>
-                    <div class="plan-name">Care Plus</div>
-                    <div class="plan-price"><span class="plan-currency">฿</span>199<span class="plan-period">/mo</span>
+                    <div class="plan-header-left">
+                        <div class="plan-badge starter">Starter</div>
+                        <div class="plan-name">Care Plus</div>
+                    </div>
+                    <div class="plan-price-wrap">
+                        <div class="plan-price-row">
+                            <span class="plan-currency">฿</span>
+                            <span class="plan-price">199</span>
+                            <span class="plan-period">/mo</span>
+                        </div>
                     </div>
                 </div>
+                <div class="plan-divider"></div>
                 <ul class="plan-features">
-                    <li>Weekly AI Scans</li>
-                    <li>Full Health Log</li>
-                    <li>Email Reports</li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Create up to 3 Pet Profiles</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>1 AI Scan / week</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Full Health Log</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>3-Month Scan History</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Vaccine & Appointment Reminders</span>
+                    </li>
                 </ul>
             </div>
 
@@ -49,15 +115,56 @@
             <div class="plan-card popular" id="plan-2" onclick="selectPlan(this,2)">
                 <div class="popular-badge">Most Popular</div>
                 <div class="plan-top">
-                    <div class="plan-badge pro">Pro</div>
-                    <div class="plan-name">Protection</div>
-                    <div class="plan-price"><span class="plan-currency">฿</span>399<span class="plan-period">/mo</span>
+                    <div class="plan-header-left">
+                        <div class="plan-badge pro">Pro</div>
+                        <div class="plan-name">Protection</div>
+                    </div>
+                    <div class="plan-price-wrap" style="margin-top: 14px;">
+                        <div class="plan-price-row">
+                            <span class="plan-currency">฿</span>
+                            <span class="plan-price">399</span>
+                            <span class="plan-period">/mo</span>
+                        </div>
                     </div>
                 </div>
+                <div class="plan-divider"></div>
                 <ul class="plan-features">
-                    <li>Unlimited AI Scans</li>
-                    <li>Detailed PDF Reports</li>
-                    <li>Priority Response</li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Create up to 5 Pet Profiles</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Unlimited AI Scans</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>12-Month Scan History</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Compare Past Scan Results</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Health Trend Analysis</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>5% Discount at Partner Shops</span>
+                    </li>
                 </ul>
             </div>
 
@@ -65,12 +172,22 @@
             <div class="plan-card vip" id="plan-3" onclick="selectPlan(this,3)">
                 <div class="vip-shimmer"></div>
                 <div class="vip-top-row">
-                    <div class="plan-badge vip-badge">VET VIP</div>
-                    <div class="vip-crown">👑</div>
+                    <div class="vip-header-left">
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <div class="plan-badge vip-badge">VET VIP</div>
+                            <div class="vip-crown">👑</div>
+                        </div>
+                        <div class="plan-name vip-name">Ultimate Concierge</div>
+                    </div>
+                    <div class="plan-price-wrap">
+                        <div class="plan-price-row">
+                            <span class="plan-currency gold">฿</span>
+                            <span class="plan-price gold">599</span>
+                            <span class="plan-period gold">/mo</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="plan-name vip-name">Ultimate Concierge</div>
-                <div class="plan-price"><span class="plan-currency gold">฿</span><span class="gold">599</span><span
-                        class="plan-period gold">/mo</span></div>
+
                 <div class="vip-feature-hero">
                     <div class="vip-call-badge">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="vip-icon">
@@ -80,13 +197,48 @@
                         24/7 Live Vet Consultation
                     </div>
                 </div>
+
+                <div class="plan-divider"></div>
                 <ul class="plan-features vip-features">
-                    <li>Everything in Pro</li>
-                    <li>📹 Video &amp; Voice Call Vet</li>
-                    <li>Dedicated Pet Specialist</li>
-                    <li>Priority Drug Delivery</li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon gold">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Unlimited Pet Profiles</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon gold">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Unlimited Video & Voice Vet Calls</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon gold">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>10% Discount at Partner Shops</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon gold">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>36-Month Scan History</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" class="feat-icon gold">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Priority Support & Early Access</span>
+                    </li>
                 </ul>
-                <div class="vip-recommend-badge">⭐ Recommended for Seniors &amp; Puppies</div>
+                <div class="vip-recommend-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <path
+                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                        </path>
+                    </svg>
+                    Recommended for Seniors &amp; Puppies
+                </div>
             </div>
 
         </div>

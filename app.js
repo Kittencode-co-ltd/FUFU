@@ -83,7 +83,6 @@ let currentUser = { name: "", email: "", plan: 0 };
 let myPets = [];
 let currentHealthPetIndex = 0;
 let currentScanPetIndex = -1;
-let healthAssessmentChart = null;
 const PLAN_NAMES = [
   "Essential (Free)",
   "Care Plus ($5/mo)",
@@ -150,9 +149,8 @@ function animateSplash() {
       goToScreen("screen-onboarding");
       showOnboardingSlide(0); // Initialize first slide
     } else {
-      goToScreen("screen-home");
-      updateHomeUI();
-      updateOwnerUI();
+      switchAuthTab("login");
+      goToScreen("screen-auth");
     }
   }, 2600);
 }
@@ -200,9 +198,8 @@ function showOnboardingSlide(n) {
 
 function finishOnboarding() {
   localStorage.setItem("fufu_visited", "1");
-  goToScreen("screen-home");
-  updateHomeUI();
-  updateOwnerUI();
+  switchAuthTab("login");
+  goToScreen("screen-auth");
 }
 
 function skipOnboarding() {
@@ -523,7 +520,7 @@ function confirmPayment() {
   alert(
     `✅ Payment Confirmed!\n\nPlan: ${planName}\nMethod: ${methodName}\n\nThank you for your purchase. (Demo)`,
   );
-  goToScreen("screen-profile");
+  goToScreen("screen-home");
 }
 
 /* ─── Auth ─── */
@@ -582,15 +579,52 @@ function doModalLogin() {
 
 function afterLogin() {
   closeLoginModal();
+  currentUser.plan = 0; // Default to Free plan
   updateOwnerUI();
   updateHomeUI();
   guestChatCount = 0;
   localStorage.removeItem("guestChatCount");
-  // Return to intent screen if set, otherwise go to plans (new user) or home
-  const dest =
-    intentScreen || (myPets.length === 0 ? "screen-plans" : "screen-home");
+  const dest = intentScreen || "screen-home";
   intentScreen = null;
   goToScreen(dest);
+}
+
+function checkAddPet() {
+  if (!isLoggedIn()) {
+    showLoginModal("screen-profile");
+    return;
+  }
+
+  const limits = [1, 3, 5, 99]; // Free, Starter, Protection, VIP
+  const limit = limits[currentUser.plan] || 1;
+
+  if (myPets.length >= limit) {
+    if (
+      confirm(
+        `Your current plan allows up to ${limit} pet(s). Would you like to upgrade your plan to add more?`,
+      )
+    ) {
+      goToScreen("screen-plans");
+    }
+  } else {
+    window.currentEditingPetIndex = null;
+
+    document.getElementById("pet-name").value = "";
+    document.getElementById("pet-age").value = "";
+    document.getElementById("pet-weight").value = "";
+    document.getElementById("pet-gender").value = "";
+    document.getElementById("pet-microchip").value = "";
+    document.getElementById("breed-search").value = "";
+    const photoImg = document.getElementById("pet-photo-img");
+    if (photoImg) {
+      photoImg.style.display = "none";
+      photoImg.src = "";
+    }
+    const ph = document.getElementById("pet-photo-placeholder");
+    if (ph) ph.style.display = "flex";
+
+    goToScreen("screen-profile");
+  }
 }
 
 function doLogout() {
@@ -635,7 +669,14 @@ function updateHomeUI() {
   const el = document.getElementById("home-owner-name");
   if (el) el.textContent = "Hi, " + n.split(" ")[0] + "!";
   const pb = document.getElementById("home-plan-badge");
-  if (pb) pb.textContent = PLAN_SHORT[currentUser.plan] || "Free";
+  if (pb) {
+    pb.textContent = PLAN_SHORT[currentUser.plan] || "Free";
+    if (currentUser.plan === 3) {
+      pb.classList.add("vip");
+    } else {
+      pb.classList.remove("vip");
+    }
+  }
   updateGreeting();
   initAdCarousel();
   updateVaccAlerts();
@@ -1142,97 +1183,6 @@ function updatePetDetailScreen(index) {
   const microchipEl = document.getElementById("pet-detail-microchip");
   if (microchipEl) microchipEl.textContent = pet.microchip || "-";
 
-  // Health Assessment Chart
-  const ctx = document.getElementById("health-assessment-chart");
-  if (ctx) {
-    if (healthAssessmentChart) {
-      healthAssessmentChart.destroy();
-    }
-    
-    // Generate mock data if none exists
-    const labels = ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr"];
-    let scores = pet.healthScores;
-    if (!scores) {
-       // Mock decreasing or increasing health score between 70 and 100
-       scores = [85, 88, 86, 90, 92, 95];
-       pet.healthScores = scores; // Save to pet object
-    }
-
-    // Create actual vs prediction datasets
-    const actualData = [...scores, null]; // Pad with null for April
-    
-    // Generate a prediction based on the last score (+/- 3%)
-    let prediction = pet.healthPrediction;
-    if (!prediction) {
-       prediction = Math.min(100, Math.max(60, scores[5] + (Math.floor(Math.random() * 7) - 3)));
-       pet.healthPrediction = prediction;
-    }
-    const predictedData = [null, null, null, null, null, scores[5], prediction];
-    
-    healthAssessmentChart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: "Actual Data",
-            data: actualData,
-            borderColor: "var(--teal)",
-            backgroundColor: "rgba(13, 148, 136, 0.1)",
-            borderWidth: 2,
-            pointBackgroundColor: "var(--teal)",
-            pointRadius: 4,
-            fill: true,
-            tension: 0.3
-          },
-          {
-            label: "Prediction (1 Month)",
-            data: predictedData,
-            borderColor: "var(--teal)",
-            borderDash: [5, 5],
-            backgroundColor: "transparent",
-            borderWidth: 2,
-            pointBackgroundColor: "#fff",
-            pointBorderColor: "var(--teal)",
-            pointBorderWidth: 2,
-            pointRadius: 4,
-            fill: false,
-            tension: 0.3
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { 
-            display: true,
-            position: 'top',
-            labels: { boxWidth: 12, usePointStyle: true }
-          },
-          tooltip: {
-            callbacks: {
-              label: function(context) {
-                return context.dataset.label + ": " + context.parsed.y + "%";
-              }
-            }
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: false,
-            min: 60,
-            max: 100,
-            grid: { color: "rgba(0,0,0,0.05)" }
-          },
-          x: {
-            grid: { display: false }
-          }
-        }
-      }
-    });
-  }
-
   // Vaccination Records
   const vacList = document.getElementById("pet-vaccination-list");
   if (vacList) {
@@ -1484,7 +1434,7 @@ function openPetProfile(index) {
 // Track current home pet page
 let homePetPage = 0;
 
-function buildHomePetCardHtml(pet, i) {
+function buildHomePetCardHtml(pet, index) {
   const photoHtml = pet.photoSrc
     ? `<img src="${pet.photoSrc}" alt="${pet.name}">`
     : pet.emoji;
@@ -1501,7 +1451,21 @@ function buildHomePetCardHtml(pet, i) {
         <span class="pet-status-text">Health Score ${pet.score} · ${statusText}</span>
       </div>
     </div>
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;flex-shrink:0;opacity:.35"><path d="M9 18l6-6-6-6"/></svg>`;
+    <button onclick="event.stopPropagation(); togglePetMenu('home-${index}')" style="background:none; border:none; padding:8px; cursor:pointer; color:var(--slate-lite); z-index:2;">
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px;">
+        <circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/>
+      </svg>
+    </button>
+    <div id="pet-menu-home-${index}" class="pet-action-menu" style="display:none; position:absolute; right:16px; top:48px; background:white; border-radius:8px; box-shadow:0 10px 25px rgba(0,0,0,0.1); border:1px solid var(--slate-ghost); z-index:100; min-width:120px; overflow:hidden;">
+      <div onclick="event.stopPropagation(); editPet(${index})" style="padding:12px 16px; font-size:14px; font-weight:600; color:var(--slate); border-bottom:1px solid var(--slate-ghost); display:flex; align-items:center; gap:8px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Edit
+      </div>
+      <div onclick="event.stopPropagation(); deletePet(${index})" style="padding:12px 16px; font-size:14px; font-weight:600; color:#ef4444; display:flex; align-items:center; gap:8px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2-2v2"/></svg>
+        Delete
+      </div>
+    </div>`;
 }
 
 function goToHomePetPage(page, petsArray) {
@@ -1525,6 +1489,8 @@ function goToHomePetPage(page, petsArray) {
       const realIndex = myPets.indexOf(pet);
       const div = document.createElement("div");
       div.className = "pet-card";
+      div.style.position = "relative";
+      div.style.overflow = "visible";
       div.onclick = () => openPetProfile(realIndex);
       div.innerHTML = buildHomePetCardHtml(pet, realIndex);
       homeList.appendChild(div);
@@ -1600,12 +1566,12 @@ function renderPetCards(searchQuery = "") {
       div.innerHTML =
         cardInnerHtml +
         `
-        <button onclick="event.stopPropagation(); togglePetMenu(${i})" style="background:none; border:none; padding:8px; cursor:pointer; color:var(--slate-lite);">
+        <button onclick="event.stopPropagation(); togglePetMenu('health-${i}')" style="background:none; border:none; padding:8px; cursor:pointer; color:var(--slate-lite); z-index:2;">
           <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px;">
             <circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/>
           </svg>
         </button>
-        <div id="pet-menu-${i}" class="pet-action-menu" style="display:none; position:absolute; right:16px; top:48px; background:white; border-radius:8px; box-shadow:0 10px 25px rgba(0,0,0,0.1); border:1px solid var(--slate-ghost); z-index:100; min-width:120px; overflow:hidden;">
+        <div id="pet-menu-health-${i}" class="pet-action-menu" style="display:none; position:absolute; right:16px; top:48px; background:white; border-radius:8px; box-shadow:0 10px 25px rgba(0,0,0,0.1); border:1px solid var(--slate-ghost); z-index:100; min-width:120px; overflow:hidden;">
           <div onclick="event.stopPropagation(); editPet(${i})" style="padding:12px 16px; font-size:14px; font-weight:600; color:var(--slate); border-bottom:1px solid var(--slate-ghost); display:flex; align-items:center; gap:8px;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             Edit
@@ -1634,9 +1600,9 @@ function renderPetCards(searchQuery = "") {
   }
 }
 
-function togglePetMenu(index) {
-  const menu = document.getElementById(`pet-menu-${index}`);
-  const isVisible = menu.style.display === "block";
+function togglePetMenu(id) {
+  const menu = document.getElementById(`pet-menu-${id}`);
+  const isVisible = menu ? menu.style.display === "block" : false;
 
   // Close all menus first
   document
@@ -1662,8 +1628,10 @@ document.addEventListener("click", (e) => {
 });
 
 function editPet(index) {
-  // Hide menu
-  document.getElementById(`pet-menu-${index}`).style.display = "none";
+  // Hide all menus
+  document
+    .querySelectorAll(".pet-action-menu")
+    .forEach((m) => (m.style.display = "none"));
 
   const pet = myPets[index];
   if (!pet) return;
@@ -1719,8 +1687,10 @@ function editPet(index) {
 }
 
 function deletePet(index) {
-  // Hide menu
-  document.getElementById(`pet-menu-${index}`).style.display = "none";
+  // Hide all menus
+  document
+    .querySelectorAll(".pet-action-menu")
+    .forEach((m) => (m.style.display = "none"));
 
   if (confirm(`Are you sure you want to delete ${myPets[index].name}?`)) {
     myPets.splice(index, 1);
