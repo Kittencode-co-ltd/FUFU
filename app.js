@@ -253,6 +253,7 @@ const NAV_HIDDEN_SCREENS = new Set([
   "screen-onboarding",
   "screen-game",
   "screen-help",
+  "screen-calling",
 ]);
 
 function goToScreen(screenId) {
@@ -2371,6 +2372,81 @@ function getBotReply(msg) {
     if (lower.includes(key)) return reply;
   }
   return `🤖 ขอบคุณสำหรับคำถามครับ\n"${msg}"\n\nสำหรับข้อมูลเฉพาะเจาะจงเรื่องนี้ แนะนำให้ปรึกษาสัตวแพทย์โดยตรงครับ หรือกดปุ่ม "Tele-Vet" เพื่อโทรหาสัตวแพทย์ทันที 🏥`;
+}
+
+/* ─── Calling Screen (Tele-Vet Mockup) ─── */
+let callTimerInterval = null;
+let callSeconds = 0;
+let isMicMuted = false;
+let isSpeakerOn = false;
+
+function startVetCall() {
+  // Reset state
+  isMicMuted = false;
+  isSpeakerOn = false;
+  callSeconds = 0;
+  updateCallTimer();
+
+  // Reset button visuals
+  const micIcon = document.getElementById('mic-icon-wrap');
+  const speakerIcon = document.getElementById('speaker-icon-wrap');
+  const micLabel = document.getElementById('mic-label');
+  const speakerLabel = document.getElementById('speaker-label');
+  if (micIcon) micIcon.classList.remove('active');
+  if (speakerIcon) speakerIcon.classList.remove('active');
+  if (micLabel) { micLabel.classList.remove('active'); micLabel.textContent = 'ไมค์'; }
+  if (speakerLabel) { speakerLabel.classList.remove('active'); speakerLabel.textContent = 'ลำโพง'; }
+
+  // Update status
+  const statusText = document.querySelector('.calling-status-text');
+  if (statusText) statusText.textContent = 'กำลังเชื่อมต่อ...';
+
+  goToScreen('screen-calling');
+
+  // Simulate connecting → connected after 2s
+  setTimeout(() => {
+    if (statusText) statusText.textContent = 'กำลังโทร...';
+    callTimerInterval = setInterval(() => {
+      callSeconds++;
+      updateCallTimer();
+    }, 1000);
+  }, 2000);
+}
+
+function updateCallTimer() {
+  const mins = String(Math.floor(callSeconds / 60)).padStart(2, '0');
+  const secs = String(callSeconds % 60).padStart(2, '0');
+  const el = document.getElementById('calling-timer');
+  if (el) el.textContent = `${mins}:${secs}`;
+}
+
+function toggleCallMic() {
+  isMicMuted = !isMicMuted;
+  const iconWrap = document.getElementById('mic-icon-wrap');
+  const label = document.getElementById('mic-label');
+  if (iconWrap) iconWrap.classList.toggle('active', isMicMuted);
+  if (label) {
+    label.classList.toggle('active', isMicMuted);
+    label.textContent = isMicMuted ? 'ปิดไมค์' : 'ไมค์';
+  }
+}
+
+function toggleCallSpeaker() {
+  isSpeakerOn = !isSpeakerOn;
+  const iconWrap = document.getElementById('speaker-icon-wrap');
+  const label = document.getElementById('speaker-label');
+  if (iconWrap) iconWrap.classList.toggle('active', isSpeakerOn);
+  if (label) {
+    label.classList.toggle('active', isSpeakerOn);
+    label.textContent = isSpeakerOn ? 'ลำโพงเปิด' : 'ลำโพง';
+  }
+}
+
+function hangupCall() {
+  clearInterval(callTimerInterval);
+  callTimerInterval = null;
+  callSeconds = 0;
+  goToScreen('screen-chat');
 }
 
 let bubbleIdCounter = 0;

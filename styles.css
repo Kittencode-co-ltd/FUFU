@@ -3986,3 +3986,261 @@ body::before {
   border-radius: 100px;
   flex-shrink: 0;
 }
+
+/* ═══════════════════════════════════════
+   SCREEN · CALLING (Tele-Vet)
+═══════════════════════════════════════ */
+#screen-calling {
+  background: linear-gradient(160deg, #0c1b2a 0%, #122a3d 40%, #0a3d3a 100%);
+}
+
+.calling-fullscreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 60px 24px 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle background glow */
+.calling-fullscreen::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(13, 148, 136, 0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Top info */
+.calling-top-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 2;
+}
+
+.calling-status-text {
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.04em;
+}
+
+.calling-timer {
+  font-family: var(--font);
+  font-size: 32px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: 2px;
+}
+
+/* Center: Profile + Pulse */
+.calling-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  z-index: 2;
+}
+
+.calling-pulse-wrapper {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calling-pulse-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(13, 148, 136, 0.35);
+  animation: callingPulse 2.4s ease-in-out infinite;
+}
+
+.calling-pulse-ring.ring-1 {
+  width: 130px;
+  height: 130px;
+  animation-delay: 0s;
+  border-color: rgba(13, 148, 136, 0.45);
+}
+
+.calling-pulse-ring.ring-2 {
+  width: 155px;
+  height: 155px;
+  animation-delay: 0.5s;
+  border-color: rgba(13, 148, 136, 0.3);
+}
+
+.calling-pulse-ring.ring-3 {
+  width: 180px;
+  height: 180px;
+  animation-delay: 1s;
+  border-color: rgba(13, 148, 136, 0.15);
+}
+
+@keyframes callingPulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0.85);
+    opacity: 1;
+  }
+}
+
+.calling-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0d9488, #0f766e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 0 4px rgba(13, 148, 136, 0.3),
+    0 8px 40px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  position: relative;
+  z-index: 3;
+}
+
+.calling-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.calling-doctor-name {
+  font-family: var(--font);
+  font-size: 20px;
+  font-weight: 800;
+  color: white;
+  text-align: center;
+}
+
+.calling-doctor-title {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.calling-clinic-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(6px);
+}
+
+/* Bottom controls */
+.calling-controls {
+  width: 100%;
+  z-index: 2;
+}
+
+.calling-control-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+}
+
+.calling-ctrl-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: transform 0.2s;
+}
+
+.calling-ctrl-btn:active {
+  transform: scale(0.92);
+}
+
+.calling-ctrl-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  transition: all 0.25s;
+}
+
+.calling-ctrl-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: white;
+}
+
+.calling-ctrl-icon.active {
+  background: white;
+  border-color: white;
+}
+
+.calling-ctrl-icon.active svg {
+  stroke: #1e293b;
+}
+
+.calling-ctrl-icon.hangup-icon {
+  background: #ef4444;
+  border-color: #ef4444;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0 4px 24px rgba(239, 68, 68, 0.4);
+}
+
+.calling-ctrl-icon.hangup-icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: white;
+}
+
+.calling-ctrl-btn.hangup:active .hangup-icon {
+  background: #dc2626;
+  box-shadow: 0 2px 12px rgba(239, 68, 68, 0.5);
+}
+
+.calling-ctrl-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.calling-ctrl-label.active {
+  color: white;
+}

@@ -1,0 +1,74 @@
+<div id="screen-calling" class="screen">
+    <div class="calling-fullscreen">
+
+        <!-- Top status bar area -->
+        <div class="calling-top-info">
+            <div class="calling-status-text">กำลังโทร...</div>
+            <div class="calling-timer" id="calling-timer">00:00</div>
+        </div>
+
+        <!-- Center: Doctor profile with pulse animation -->
+        <div class="calling-center">
+            <div class="calling-pulse-wrapper">
+                <div class="calling-pulse-ring ring-1"></div>
+                <div class="calling-pulse-ring ring-2"></div>
+                <div class="calling-pulse-ring ring-3"></div>
+                <div class="calling-avatar">
+                    <img src="../img/dr.png" alt="Dr. Profile" class="calling-avatar-img" />
+                </div>
+            </div>
+            <div class="calling-doctor-name">สพ.ญ.ธัญญรัตน์ ดีบุญช่วย</div>
+            <div class="calling-doctor-title">สัตวแพทย์ผู้เชี่ยวชาญ</div>
+            <div class="calling-clinic-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    style="width:14px;height:14px">
+                    <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" />
+                    <circle cx="12" cy="10" r="3" />
+                </svg>
+                ทีดี เพ็ท คลินิก
+            </div>
+        </div>
+
+        <!-- Bottom: Control buttons -->
+        <div class="calling-controls">
+            <div class="calling-control-row">
+                <!-- Mute toggle -->
+                <button class="calling-ctrl-btn" id="btn-mic-toggle" onclick="toggleCallMic()">
+                    <div class="calling-ctrl-icon" id="mic-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                            <line x1="12" y1="19" x2="12" y2="23" />
+                            <line x1="8" y1="23" x2="16" y2="23" />
+                        </svg>
+                    </div>
+                    <span class="calling-ctrl-label" id="mic-label">ไมค์</span>
+                </button>
+
+                <!-- Speaker toggle -->
+                <button class="calling-ctrl-btn" id="btn-speaker-toggle" onclick="toggleCallSpeaker()">
+                    <div class="calling-ctrl-icon" id="speaker-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                        </svg>
+                    </div>
+                    <span class="calling-ctrl-label" id="speaker-label">ลำโพง</span>
+                </button>
+
+                <!-- Hang up -->
+                <button class="calling-ctrl-btn hangup" onclick="hangupCall()">
+                    <div class="calling-ctrl-icon hangup-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path
+                                d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 11.59 11.59 0 0 0 3.63.81 2 2 0 0 1 1.9 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 5.16 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.03 1h3a2 2 0 0 1 2 1.72c.127.96.363 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91" />
+                            <line x1="1" y1="1" x2="23" y2="23" />
+                        </svg>
+                    </div>
+                    <span class="calling-ctrl-label">วางสาย</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
